@@ -11,7 +11,7 @@
 	export default {
 		data() {
 			return {
-                list: [1,2,3]
+                list: new Array(20)
                 
 			}
 		},

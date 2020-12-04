@@ -1,12 +1,25 @@
 <template>
 	<view class="u-wrap">
 		<view class="u-search-box">
-			<view class="u-search-inner">
-				<u-icon name="search" color="#909399" :size="28"></u-icon>
-				<text class="u-search-text">搜索uView</text>
-			</view>
+            <u-input
+                class="search-input"
+                palceholder="搜索商品名称"
+                v-model="searchData"
+                :height="35"
+                @input="changeHandle"
+                placeholder-style="color: #0000007d;font-size: 14px;"
+                :custom-style="{
+                    paddingLeft: '45px',
+                    paddingRight: '32px',
+                    background: '#F3F4F7',
+                    borderRadius: '18px',
+                    fontSize: '14px'
+                }"
+            >
+            </u-input>
+            <u-icon name="search" class="search-icon"></u-icon>
 		</view>
-		<view class="u-menu-wrap">
+		<view class="u-menu-wrap" v-if="!searchData">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
 				 :data-current="index" @tap.stop="swichMenu(index)">
@@ -21,12 +34,18 @@
 				</scroll-view>
 			</block>
 		</view>
+        <view class="search-list" v-else>
+            <view v-for="item in searchList" :key="item" class="search-list-item">
+                <product-item :productData="item"></product-item>
+            </view>
+        </view>
 	</view>
 </template>
 
 <script>
-    import classifyData from "../../../common/classify.data.js";
+    import classifyData from "@common/classify.data.js";
     import ListComponent from './list'
+    import ProductItem from '@components/custom-product-item/custom-product-item';
 	export default {
 		data() {
 			return {
@@ -34,19 +53,19 @@
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
-				menuItemHeight: 0, // 左边菜单item的高度
+                menuItemHeight: 0, // 左边菜单item的高度
+                searchData: '', // 搜索框的值
+                searchList: [], // 模糊搜索出来的列表
 			}
 		},
 		computed: {
 			
         },
         components: {
-            ListComponent
+            ListComponent,
+            ProductItem
         },
 		methods: {
-			getImg() {
-				return Math.floor(Math.random() * 35);
-			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if(index == this.current) return ;
@@ -74,7 +93,17 @@
 						this[dataVal] = res.height;
 					}).exec();
 				})
-			}
+            },
+            // 搜索框change事件
+            changeHandle(value) {
+                this.$u.debounce(() => {
+                    if (!value) {
+                        this.searchList = []
+                        return;
+                    }
+                    this.searchList = new Array(value.length)
+                }, 500)
+            },
 		}
 	}
 </script>
@@ -90,62 +119,51 @@
 	}
 
 	.u-search-box {
-		padding: 18rpx 30rpx;
-	}
+		margin: 14px;
+        position: 'relative'
+    }
+
+    .search-input input{
+        height: "65px";
+        background: '#F3F4F7';
+        border-radius: "18px";
+        padding-left: '45px';
+    }
+    
+    .search-icon {
+        position: absolute;
+        z-index: 1;
+        top: 19px;
+        left: 32px;
+    }
 
 	.u-menu-wrap {
 		flex: 1;
 		display: flex;
 		overflow: hidden;
 	}
-
-	.u-search-inner {
-		background-color: rgb(234, 234, 234);
-		border-radius: 100rpx;
-		display: flex;
-		align-items: center;
-		padding: 10rpx 16rpx;
-	}
-
-	.u-search-text {
-		font-size: 26rpx;
-		color: $u-tips-color;
-		margin-left: 10rpx;
-	}
-
+    
 	.u-tab-view {
-		width: 200rpx;
+		width: 93px;
 		height: 100%;
 	}
 
 	.u-tab-item {
-		height: 110rpx;
+		height: 39px;
 		background: #f6f6f6;
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 26rpx;
-		color: #444;
-		font-weight: 400;
-		line-height: 1;
+		color: #000;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
 	}
 	
 	.u-tab-item-active {
-		position: relative;
-		color: #000;
-		font-size: 30rpx;
-		font-weight: 600;
+        color: rgba(0, 0, 0, 0.5);
 		background: #fff;
-	}
-	
-	.u-tab-item-active::before {
-		content: "";
-		position: absolute;
-		border-left: 4px solid $u-type-primary;
-		height: 32rpx;
-		left: 0;
-		top: 39rpx;
 	}
 
 	.u-tab-view {
@@ -157,7 +175,15 @@
 	}
 	
 	.page-view {
-		padding: 16rpx;
-	}
+		padding: 8px;
+    }
+    
+    .search-list {
+        padding: 0 14px 14px;
+    }
+
+    .search-list-item {
+        margin-bottom: 17px;
+    }
 	
 </style>
