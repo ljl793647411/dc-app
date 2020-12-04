@@ -1,8 +1,7 @@
 <template>
-    <view>
-        <view v-for="item in list" :key="item">
+    <view class="right-list-box">
+        <view v-for="item in list" :key="item" class="right-item">
             <product-item :productData="item"></product-item>
-            213123
         </view>
     </view>
 </template>
@@ -28,6 +27,12 @@
 </script>
 
 <style lang="scss" scoped>
-	
+	.right-list-box {
+        width: 100%;
+
+        .right-item {
+            margin-bottom: 17px;
+        }
+    }
 	
 </style>
