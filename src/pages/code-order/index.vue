@@ -39,6 +39,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
+        <selected-product></selected-product>
 	</view>
 </template>
 
@@ -46,6 +47,7 @@
     import classifyData from "@common/classify.data.js";
     import ListComponent from './list'
     import ProductItem from '@components/custom-product-item/custom-product-item';
+    import SelectedProduct from '@components/selected-product/index';
 	export default {
 		data() {
 			return {
@@ -63,7 +65,8 @@
         },
         components: {
             ListComponent,
-            ProductItem
+            ProductItem,
+            SelectedProduct
         },
 		methods: {
 			// 点击左边的栏目切换
@@ -88,7 +91,7 @@
 							setTimeout(() => {
 								this.getElRect(elClass);
 							}, 10);
-							return ;
+							return
 						}
 						this[dataVal] = res.height;
 					}).exec();

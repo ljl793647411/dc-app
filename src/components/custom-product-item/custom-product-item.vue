@@ -61,12 +61,7 @@
         .left-img {
             width: 66px;
             height: 66px;
-
-            .img {
-                width: 100%;
-                height: 100%;
-                background: #ccc;
-            }
+            background: #ccc;
         }
 
         .right-content {
