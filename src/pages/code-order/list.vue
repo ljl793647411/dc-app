@@ -1,6 +1,6 @@
 <template>
     <view class="right-list-box">
-        <view v-for="item in list" :key="item" class="right-item">
+        <view v-for="item in list" :key="item" class="right-item" @click="jumpDetail">
             <product-item :productData="item"></product-item>
         </view>
     </view>
@@ -22,6 +22,9 @@
             ProductItem
         },
 		methods: {
+            jumpDetail() {
+                this.$u.route('/pages/detail/index')
+            }
 		}
 	}
 </script>

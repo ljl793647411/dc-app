@@ -1,87 +1,76 @@
 <template>
-    <view class="product-item-box-class">
-        <view class="left-img">
-            <image :src="productData.img" class="img" />
+    <view class="product-detail-box shopping-show-active">
+        <view class="img-head">
+            <image src=""></image>
         </view>
-        <view class="right-content">
+        <view class="detail-content">
             <view class="name u-line-1">
                 秘制剁椒鱼头王
             </view>
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
-                        <text v-if="type==='default'">
-                            {{`本月销量 90份`}}
-                        </text>
+                        {{`本月销量 90份`}}
                     </view>
                     <view class="price-box">
                         <view class="price">
                             ￥49.00
                         </view>
-                        <view class="del-price" v-if="type==='default'">
+                        <view class="del-price">
                             ￥69.00
                         </view>
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" @click.stop="subtract">-</view>
+                    <view class="btn">-</view>
                     <text class="text">1</text>
-                    <view class="btn" @click.stop="add">+</view>
+                    <view class="btn">+</view>
                 </view>
             </view>
         </view>
+        <view class="product-desc">
+            <view class="title">
+                商品简介
+            </view>
+            <view class="content">
+                是湖南省的传统名菜，属于湘菜系。据传，起源和清代文人黄宗宪有关。通常以鳙鱼鱼头、剁椒为主料，配以豉油、姜、葱、蒜等辅料蒸制而成。
+            </view>
+        </view>
+        <selected-product></selected-product>
     </view>
 </template>
-
 <script>
+    import SelectedProduct from '@components/selected-product/index';
 	export default {
-        props: {
-            // 菜品对象信息
-            productData: {
-                type: Object,
-                default: {}
-            },
-            // 调用场景 ['default', 'shopCart']
-            type: {
-                type: String,
-                default: 'default'
+        data() {
+            return {
+
             }
         },
-		data() {
-			return {
-			}
-		},
-		computed: {
-			
-		},
-		methods: {
-            // 减一件商品
-            subtract(e) {
-                console.log('subtract')
-            },
-            // 加一件商品
-            add() {
-                console.log('add')
-            },
-		}
+        components: {
+            SelectedProduct,
+        },
+        mounted() {
+
+        },
+        methods: {
+
+        }
 	}
 </script>
-
-<style lang="scss" scoped>
-	.product-item-box-class {
+<style lang="scss">
+    .product-detail-box {
         width: 100%;
-        height: 66px;
-        display: flex;
+        // 预留购物面板的距离
+        padding-bottom: 120px;
 
-        .left-img {
-            width: 66px;
-            height: 66px;
-            background: #ccc;
+        .img-head {
+            width: 100%;
+            height: 275px;
         }
 
-        .right-content {
-            flex: 1;
-            padding: 0 16px;
+        .detail-content {
+            padding: 13px 16px;
 
             .name {
                 width: 100%;
@@ -157,6 +146,24 @@
             }
         }
 
+        .product-desc {
+            margin-top: 30px;
+            padding: 0 16px 13px;
+
+            .title {
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(0, 0, 0, 0.85);
+                line-height: 20px;
+                padding-bottom: 13px;
+            }
+
+            .content {
+                font-size: 12px;
+                font-weight: 400;
+                color: rgba(0, 0, 0, 0.85);
+                line-height: 17px;
+            }
+        }
     }
-	
 </style>

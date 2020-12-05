@@ -54,7 +54,6 @@
     import ProductItem from '@components/custom-product-item/custom-product-item';
 	export default {
         props: {
-           
         },
 		data() {
 			return {
@@ -99,7 +98,7 @@
         bottom: 0;
         left: 0;
         background: #fff;
-        padding: 10px 20px;
+        padding: 0 20px;
         box-sizing: border-box;
 
         .board {
@@ -108,6 +107,7 @@
             width: 100%;
             height: 100%;
             background: #ffffff;
+            padding: 10px 0;
         }
         .message-content-box {
             width: 100%;

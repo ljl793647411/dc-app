@@ -1,5 +1,5 @@
 <template>
-	<view class="u-wrap">
+	<view class="u-wrap shopping-show-active">
 		<view class="u-search-box">
             <u-input
                 class="search-input"
@@ -39,7 +39,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product></selected-product>
+        <selected-product :shoppingList="shoppingList"></selected-product>
 	</view>
 </template>
 
@@ -58,6 +58,7 @@
                 menuItemHeight: 0, // 左边菜单item的高度
                 searchData: '', // 搜索框的值
                 searchList: [], // 模糊搜索出来的列表
+                shoppingList: [], // 购物车数据
 			}
 		},
 		computed: {

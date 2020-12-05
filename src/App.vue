@@ -30,4 +30,9 @@
         left: 0;
         z-index: 100;
     }
+
+    // 预留购物面板的距离
+    .shopping-show-active {
+        padding-bottom: 120px;
+    }
 </style>
