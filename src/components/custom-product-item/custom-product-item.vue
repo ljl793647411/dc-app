@@ -10,13 +10,15 @@
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
-                        {{`本月销量 90份`}}
+                        <text v-if="type==='default'">
+                            {{`本月销量 90份`}}
+                        </text>
                     </view>
                     <view class="price-box">
                         <view class="price">
                             ￥49.00
                         </view>
-                        <view class="del-price">
+                        <view class="del-price" v-if="type==='default'">
                             ￥69.00
                         </view>
                     </view>
@@ -38,6 +40,11 @@
             productData: {
                 type: Object,
                 default: {}
+            },
+            // 调用场景 ['default', 'shopCart']
+            type: {
+                type: String,
+                default: 'default'
             }
         },
 		data() {
@@ -89,6 +96,7 @@
                         color: rgba(0, 0, 0, 0.85);
                         line-height: 17px;
                         padding-bottom: 6px;
+                        min-height: 20px;
                     }
 
                     .price-box {
