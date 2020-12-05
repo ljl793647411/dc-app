@@ -21,6 +21,12 @@
 			"style": {
 				"navigationBarTitleText": "商品详情"
 			}
+		},
+		{
+			"path": "pages/order-payment/index",
+			"style": {
+				"navigationBarTitleText": "订单支付"
+			}
 		}
 	],
 	"globalStyle": {
