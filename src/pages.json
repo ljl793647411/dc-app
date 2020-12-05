@@ -11,21 +11,33 @@
 			}
         },
 		{
-			"path": "pages/code-order/index",
+			"path": "pages/code-order/code-order/index",
 			"style": {
 				"navigationBarTitleText": "扫码点餐"
 			}
 		},
 		{
-			"path": "pages/detail/index",
+			"path": "pages/code-order/detail/index",
 			"style": {
 				"navigationBarTitleText": "商品详情"
 			}
 		},
 		{
-			"path": "pages/order-payment/index",
+			"path": "pages/code-order/order-payment/index",
 			"style": {
 				"navigationBarTitleText": "订单支付"
+			}
+		},
+		{
+			"path": "pages/code-order/order-pay-page/index",
+			"style": {
+				"navigationBarTitleText": "订单支付"
+			}
+		},
+		{
+			"path": "pages/code-order/order-detail/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
 			}
 		}
 	],

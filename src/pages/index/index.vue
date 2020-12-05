@@ -16,7 +16,7 @@
 		},
 		methods: {
             jumpCodeOrder() {
-                this.$u.route('/pages/code-order/index')
+                this.$u.route('/pages/code-order/code-order/index')
             },
         }
 	}

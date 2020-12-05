@@ -23,7 +23,7 @@
         },
 		methods: {
             jumpDetail() {
-                this.$u.route('/pages/detail/index')
+                this.$u.route('/pages/code-order/detail/index')
             }
 		}
 	}

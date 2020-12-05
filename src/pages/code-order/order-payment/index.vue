@@ -22,7 +22,7 @@ export default {
     methods: {
         // 跳转订单详情
         viewOrder() {
-            this.$u.route('/pages/order-payment/index')
+            this.$u.route('/pages/code-order/order-pay-page/index')
         },
         // 取消订单
         orderCancel() {

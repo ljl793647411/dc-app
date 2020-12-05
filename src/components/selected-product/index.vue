@@ -29,7 +29,7 @@
                             <text class="desc">已选择8件菜品</text>
                         </view>
                     </view>
-                    <view class="btn-box" >立即下单</view>
+                    <view class="btn-box" @click="jumpOrderPayment">立即下单</view>
                 </view>
             </view>
             <view :class="['shopping-list-modal', {'shopping-list-modal-open': showMask}]">
@@ -85,6 +85,10 @@
             closeShoppingModal() {
                 this.showMask = false
             },
+            // 跳转下单页
+            jumpOrderPayment() {
+                this.$u.route('/pages/code-order/order-payment/index')
+            }
 		}
 	}
 </script>
