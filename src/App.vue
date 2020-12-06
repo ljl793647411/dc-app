@@ -3,6 +3,12 @@
 	export default {
         onLaunch: function() {
             console.log('App Launch')
+            uni.authorize({
+                scope: 'scope.userInfo',
+                success() {
+                    uni.getLocation()
+                }
+            })
 		},
 		onShow: function() {
             console.log('App Show')

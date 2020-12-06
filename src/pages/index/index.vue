@@ -41,7 +41,7 @@
 			}
         },
         mounted() {
-            console.log('HOME_FUNCTION_ENTRANCE', HOME_FUNCTION_ENTRANCE)
+            
         },
 		computed: {
         },
