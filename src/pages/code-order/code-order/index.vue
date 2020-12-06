@@ -7,13 +7,15 @@
                 v-model="searchData"
                 :height="35"
                 @input="changeHandle"
-                placeholder-style="color: #0000007d;font-size: 14px;"
+                placeholder-style="color: #0000007d;font-size: 14px;lineHeight: 35px"
                 :custom-style="{
                     paddingLeft: '45px',
                     paddingRight: '32px',
                     background: '#F3F4F7',
                     borderRadius: '18px',
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    height: '35px',
+                    lineHeight: '35px'
                 }"
             >
             </u-input>
@@ -137,7 +139,7 @@
     .search-icon {
         position: absolute;
         z-index: 1;
-        top: 19px;
+        top: 25px;
         left: 32px;
     }
 

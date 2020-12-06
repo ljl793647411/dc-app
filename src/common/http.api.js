@@ -4,11 +4,14 @@ const install = (Vue, vm) => {
 	/**
 	 * code 微信授权获取openid
 	 */
-	let auth = (params = {}) => vm.$u.post("/login/login",params);
+    let auth = (params = {}) => vm.$u.post("/login/login",params);
+    
+    const getHotProduct = (params = {}) => vm.$u.get("static/mock/hotx-product.json");
 	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
-		auth, 
+        auth, 
+        getHotProduct
 	};
 }
 
