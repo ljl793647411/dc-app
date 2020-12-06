@@ -23,7 +23,7 @@
                         </view>
                     </view>
                 </view>
-                <button class="order-immediately-btn">
+                <button class="order-immediately-btn" @click="add">
                     立即点餐 
                 </button>
             </view>
@@ -33,7 +33,11 @@
 
 <script>
 export default {
-
+    methods: {
+        add() {
+            this.$emit('saceCode')
+        }
+    }
 }
 </script>
 

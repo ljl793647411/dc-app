@@ -18,8 +18,8 @@
             <home-title title="店铺精选"></home-title>
             <view class="home-product-list-box">
                 <view v-for="(item, index) in productList" :key="index" :class="{'home-product-item': index === 0}">
-                    <product-item-first v-if="index === 0"></product-item-first>
-                    <product-item v-else></product-item>
+                    <product-item-first v-if="index === 0" @saceCode="jumpCodeOrder"></product-item-first>
+                    <product-item v-else @saceCode="jumpCodeOrder"></product-item>
                 </view>
             </view>
             <home-title title="店铺动态"></home-title>
@@ -29,6 +29,7 @@
 
 <script>
     import { HOME_FUNCTION_ENTRANCE } from '@common/config.js'
+    import { saceCode } from '@common/utils.js'
     import HomeTitle from '@components/home-title/index'
     import ProductItem from './product-item'
     import ProductItemFirst from './product-item-first'
@@ -53,6 +54,7 @@
 		methods: {
             // 跳转列表
             jumpCodeOrder() {
+                const { result } = saceCode()
                 this.$u.route('/pages/code-order/code-order/index')
             },
             // 方法转换

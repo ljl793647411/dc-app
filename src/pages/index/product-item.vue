@@ -23,7 +23,7 @@
                         </view>
                     </view>
                 </view>
-                <view class="add-btn">
+                <view class="add-btn" @click="add">
                     +
                 </view>
             </view>
@@ -33,7 +33,11 @@
 
 <script>
 export default {
-
+    methods: {
+        add() {
+            this.$emit('saceCode')
+        }
+    }
 }
 </script>
 
