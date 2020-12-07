@@ -29,21 +29,21 @@ const productList = {
     category_list: [
         {
             name: '凉菜', // 类别名称
-            child_key: 1 // 对应的商品列表key
+            child_key: 1, // 对应的商品列表key
+            product_list: [
+                {
+                    parent_key: 1, // 对应的类别key
+                    "product_id": 1, // 商品id
+                    "img_src": "", // 商品图片
+                    "name": "秘制剁椒鱼头王", // 商品名称
+                    "sales": 30, // 今日销量
+                    "old_price": 69.00, // 原价
+                    "new_price": 49.00, // 现价
+                    selecteed_num: 1, // 已选择的菜品数量
+                }
+            ]
         }
     ],
-    product_list: [
-        {
-            parent_key: 1, // 对应的类别key
-            "product_id": 1, // 商品id
-            "img_src": "", // 商品图片
-            "name": "秘制剁椒鱼头王", // 商品名称
-            "sales": 30, // 今日销量
-            "old_price": 69.00, // 原价
-            "new_price": 49.00, // 现价
-            selecteed_num: 1, // 已选择的菜品数量
-        }
-    ]
 }
 // 模糊搜索商品列表
 const fuzzySearchGoodsList = [

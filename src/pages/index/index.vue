@@ -18,8 +18,8 @@
             <home-title title="店铺精选"></home-title>
             <view class="home-product-list-box">
                 <view v-for="(item, index) in productList" :key="index" :class="{'home-product-item': index === 0}">
-                    <product-item-first v-if="index === 0" @saceCode="jumpCodeOrder"></product-item-first>
-                    <product-item v-else @saceCode="jumpCodeOrder"></product-item>
+                    <product-item-first :productDetail="item" v-if="index === 0" @saceCode="jumpCodeOrder"></product-item-first>
+                    <product-item :productDetail="item" v-else @saceCode="jumpCodeOrder"></product-item>
                 </view>
             </view>
             <home-title title="店铺动态"></home-title>

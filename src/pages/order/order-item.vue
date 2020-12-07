@@ -3,20 +3,20 @@
         <view class="order-item-box">
             <view class="info-box">
                 <view class="top">
-                    <view class="title">{{data.title}}</view>
-                    <view class="status">{{orderStatusText(data)}}</view>
+                    <view class="title">{{orderData.shop_name}}</view>
+                    <view class="status">{{orderStatusText(orderData)}}</view>
                 </view>
                 <view class="date">
-                    {{data.date}}
+                    {{orderData.start_time}}
                 </view>
                 <view class="desc">
-                    {{data.desc}}
+                    {{`共计${orderData.order_goods_num}件菜品`}}
                 </view>
             </view>
             <view class="operation-box">
-                <view class="btn add" v-if="data.status == 1 && data.type == 1">加菜</view>
-                <view class="btn btn-2" v-if="data.status == 1 && data.type == 1">立即付款</view>
-                <view class="btn add" v-if="data.status == 2 && data.type == 2">再来一单</view>
+                <view class="btn add" v-if="orderData.order_status == 1 && orderData.order_type == 1">加菜</view>
+                <view class="btn btn-2" v-if="orderData.order_status == 1 && orderData.order_type == 1">立即付款</view>
+                <view class="btn add" v-if="orderData.order_status == 2 && orderData.order_type == 3">再来一单</view>
             </view>
         </view>
     </view>
@@ -25,7 +25,7 @@
 <script>
 export default {
     props: {
-        data: {
+        orderData: {
             type: Object,
             default: {}
         }
@@ -33,13 +33,13 @@ export default {
     methods: {
         // 获取订单状态文案
         orderStatusText(item) {
-            if (item.status == 1 && item.type == 1) {
+            if (item.order_status == 1 && item.order_type == 1) {
                 return '进行中'
             }
-            if (item.status == 2 && item.type == 1) {
+            if (item.order_status == 2 && item.order_type == 1) {
                 return '已完成'
             }
-            if (item.status == 2 && item.type == 2) {
+            if (item.order_status == 2 && item.order_type == 3) {
                 return '已送达'
             }
         }

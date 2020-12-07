@@ -1,25 +1,25 @@
 <template>
     <view class="home-product-item-first-box">
         <view class="img">
-            <image src=""></image>
+            <image :src="productDetail.img_src"></image>
         </view>
         <view class="right-content">
             <view class="title">
-                <text>秘制剁椒鱼头王</text>
+                <text>{{productDetail.name}}</text>
             </view>
             <view class="bottom-content">
                 <view class="desc-box">
                     <view class="desc">
                         <text>
-                            {{`本月销量 90份`}}
+                            {{`本月销量${productDetail.sales}份`}}
                         </text>
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            ￥49.00
+                            {{`￥${productDetail.new_price}`}}
                         </view>
                         <view class="del-price">
-                            ￥69.00
+                            {{`￥${productDetail.old_price}`}}
                         </view>
                     </view>
                 </view>
@@ -33,6 +33,12 @@
 
 <script>
 export default {
+    props: {
+        productDetail: {
+            type: Object,
+            default: {}
+        }
+    },
     methods: {
         add() {
             this.$emit('saceCode')
