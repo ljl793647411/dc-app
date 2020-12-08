@@ -1,29 +1,29 @@
 <template>
     <view class="product-detail-box shopping-show-active">
         <view class="img-head">
-            <image src=""></image>
+            <image :src="productData.img_src" />
         </view>
         <view class="detail-content">
             <view class="name u-line-1">
-                秘制剁椒鱼头王
+                <text>{{productDetail.name || ''}}</text>
             </view>
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
-                        {{`本月销量 90份`}}
+                        {{`本月销量${productDetail.sales || 0}份`}}
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            ￥49.00
+                            {{`￥${productDetail.new_price}`}}
                         </view>
                         <view class="del-price">
-                            ￥69.00
+                            {{`￥${productDetail.old_price}`}}
                         </view>
                     </view>
                 </view>
                 <view class="btn-box">
                     <view class="btn">-</view>
-                    <text class="text">1</text>
+                    <text class="text">{{productDetail.selecteed_num}}</text>
                     <view class="btn">+</view>
                 </view>
             </view>
@@ -33,15 +33,21 @@
                 商品简介
             </view>
             <view class="content">
-                是湖南省的传统名菜，属于湘菜系。据传，起源和清代文人黄宗宪有关。通常以鳙鱼鱼头、剁椒为主料，配以豉油、姜、葱、蒜等辅料蒸制而成。
+                {{productDetail.product_desc || ''}}
             </view>
         </view>
         <selected-product></selected-product>
     </view>
 </template>
 <script>
-    import SelectedProduct from '@components/selected-product/index';
+    import SelectedProduct from '@/components/selected-product/index';
 	export default {
+        props: {
+            productDetail: {
+                type: Object,
+                default: {}
+            }
+        },
         data() {
             return {
 

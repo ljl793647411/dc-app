@@ -15,8 +15,9 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        "@components": resolve("src/components"),
-        "@common": resolve("src/common"),
+        "@/components": resolve("src/components"),
+        "@/common": resolve("src/common"),
+        "@/store": resolve("src/common"),
         "@": resolve("src"),
       },
     },

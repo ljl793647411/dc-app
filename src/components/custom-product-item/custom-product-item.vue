@@ -1,31 +1,31 @@
 <template>
     <view class="product-item-box-class">
         <view class="left-img">
-            <image :src="productData.img" class="img" />
+            <image :src="productData.img_src" class="img" />
         </view>
         <view class="right-content">
             <view class="name u-line-1">
-                秘制剁椒鱼头王
+                <text>{{productDetail.name || ''}}</text>
             </view>
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
                         <text v-if="type==='default'">
-                            {{`本月销量 90份`}}
+                            {{`本月销量${productDetail.sales || 0}份`}}
                         </text>
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            ￥49.00
+                            {{`￥${productDetail.new_price || 0}`}}
                         </view>
                         <view class="del-price" v-if="type==='default'">
-                            ￥69.00
+                            {{`￥${productDetail.old_price || 0}`}}
                         </view>
                     </view>
                 </view>
                 <view class="btn-box">
                     <view class="btn" @click.stop="subtract">-</view>
-                    <text class="text">1</text>
+                    <text class="text">{{productDetail.selecteed_num}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>

@@ -46,10 +46,10 @@
 </template>
 
 <script>
-    import classifyData from "@common/classify.data.js";
+    import classifyData from "@/common/classify.data.js";
     import ListComponent from './list'
-    import ProductItem from '@components/custom-product-item/custom-product-item';
-    import SelectedProduct from '@components/selected-product/index';
+    import ProductItem from '@/components/custom-product-item/custom-product-item';
+    import SelectedProduct from '@/components/selected-product/index';
 	export default {
 		data() {
 			return {

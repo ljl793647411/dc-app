@@ -4,6 +4,8 @@
             <view class="banner-home">
                 <image src=""></image>
             </view>
+            <button open-type="getUserInfo" @bindgetuserinfo="getUserInfoHandle">授权</button>
+            <button @click="getsession">111</button>
             <view class="entrance-box">
                 <view class="entrance-item" v-for="item in entranceModule" :key="item.id" @click="funcTrans(item.funcName)">
                     <view class="img">
@@ -28,9 +30,10 @@
 </template>
 
 <script>
-    import { HOME_FUNCTION_ENTRANCE } from '@common/config.js'
-    import { saceCode } from '@common/utils.js'
-    import HomeTitle from '@components/home-title/index'
+    import { loginFunc } from '@/common/utils'
+    import { HOME_FUNCTION_ENTRANCE } from '@/common/config.js'
+    import { saceCode } from '@/common/utils.js'
+    import HomeTitle from '@/components/home-title/index'
     import ProductItem from './product-item'
     import ProductItemFirst from './product-item-first'
 
@@ -41,8 +44,8 @@
                 productList: new Array(9),
 			}
         },
-        mounted() {
-                           
+        onLoad() {
+            this.init()
         },
 		computed: {
         },
@@ -52,6 +55,23 @@
             ProductItemFirst,
         },
 		methods: {
+            // 这个方法把获取sessionKey的方法也放到业务逻辑里
+            // 是因为需要在login拿到sessionKey之后才能请求其他逻辑，
+            // 必须是串行逻辑
+            async init() {
+                await loginFunc(this)
+                this.$u.api.hotProduct({store_id: 1}).then(res => {
+                })
+            },
+            getsession() {
+                uni.getUserInfo({
+                    withCredentials: true,
+                    lang: 'zh_CN',
+                    success: (res) => {
+                        console.log('res', res)
+                    }
+                })
+            },
             // 跳转列表
             jumpCodeOrder() {
                 const { result } = saceCode()
@@ -59,13 +79,15 @@
             },
             // 方法转换
             funcTrans(name) {
-                console.log('name', name)
                 switch(name) {
                     case 'jumpCodeOrder':
                         this.jumpCodeOrder()
                         break
                 }
             },
+            getUserInfoHandle(res) {
+                console.log('res', res)
+            }
         }
 	}
 </script>

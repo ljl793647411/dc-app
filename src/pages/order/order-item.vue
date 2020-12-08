@@ -3,14 +3,14 @@
         <view class="order-item-box">
             <view class="info-box">
                 <view class="top">
-                    <view class="title">{{orderData.shop_name}}</view>
+                    <view class="title">{{orderData.shop_name || ''}}</view>
                     <view class="status">{{orderStatusText(orderData)}}</view>
                 </view>
                 <view class="date">
                     {{orderData.start_time}}
                 </view>
                 <view class="desc">
-                    {{`共计${orderData.order_goods_num}件菜品`}}
+                    {{`共计${orderData.order_goods_num || 0}件菜品`}}
                 </view>
             </view>
             <view class="operation-box">

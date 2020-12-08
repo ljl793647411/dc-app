@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import ProductItem from '@components/custom-product-item/custom-product-item';
+    import ProductItem from '@/components/custom-product-item/custom-product-item';
 	export default {
 		data() {
 			return {

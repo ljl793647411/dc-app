@@ -8,40 +8,40 @@
                 <text class="name">醉徽湘</text>
                 <view class="info">
                     <text>桌号：</text>
-                    <text>一楼01号</text>
+                    <text>{{orderDetail.desk_name || ''}}</text>
                 </view>
                 <view class="info">
                     <text>用餐人数：</text>
-                    <text> 4人</text>
+                    <text>{{`${orderDetail.eat_numb || ''}人`}}</text>
                 </view>
                 <view class="info">
                     <text>下单时间：</text>
-                    <text>2020-12-02 12:12</text>
+                    <text>{{`${orderDetail.start_time || ''}`}}</text>
                 </view>
             </view>
         </view>
         <view class="content-box">
             <view class="total-title">
-                {{`共${dataList.length}件菜品`}}
+                {{`共${orderDetail.product_list.length}件菜品`}}
             </view>
-            <view v-for="(item, index) in dataList" 
+            <view v-for="(item, index) in orderDetail.product_list" 
                 :key="index"
             >
                 <view class="order-info-box" v-if="index < showListNum">
                     <view class="left-img">
-                        <image :src="productData.img" class="img" />
+                        <image :src="item.img_src" class="img" />
                     </view>
                     <view class="right-content">
                         <view class="left-info">
-                            <text class="name">秘制剁椒鱼头王</text>
+                            <text class="name">{{item.name || ''}}</text>
                             <text class="desc">
-                                本月销量90份
+                                {{`本月销量${item.sales || 0}份`}}
                             </text>
                         </view>
                         <view class="price-info">
-                            <text class="price">￥49.00</text>
+                            <text class="price">{{`￥${item.product_price}`}}</text>
                             <text class="num">
-                                ×1
+                                {{`x${item.product_num}`}}
                             </text>
                         </view>
                     </view>
@@ -52,11 +52,11 @@
             <text @click="changeMoreStatus">{{`${openMoreText}(共${dataList.length}件)`}}</text>
         </view>
         <text class="exrat-price">
-            {{`餐具费：${4}元`}}
+            {{`餐具费：${orderDetail.extra_price}元`}}
         </text>
         <view class="total-price-box">
             <text class="total-text">合计</text>
-            <text class="total-num">￥233.40</text>
+            <text class="total-num">{{`￥${orderDetail.total_price}`}}</text>
         </view>
     </view>
 </template>
@@ -65,12 +65,15 @@
 export default {
     props: {
         title: {
-            type: String
+            type: String,
+        },
+        orderDetail: {
+            type: Object,
+            default: {}
         }
     },
     data() {
         return {
-            dataList: new Array(9),
             showListNum: 3, // 展示几条
         }
     },

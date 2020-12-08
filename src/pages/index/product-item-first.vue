@@ -5,21 +5,21 @@
         </view>
         <view class="right-content">
             <view class="title">
-                <text>{{productDetail.name}}</text>
+                <text>{{productDetail.name || ''}}</text>
             </view>
             <view class="bottom-content">
                 <view class="desc-box">
                     <view class="desc">
                         <text>
-                            {{`本月销量${productDetail.sales}份`}}
+                            {{`本月销量${productDetail.sales || 0}份`}}
                         </text>
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            {{`￥${productDetail.new_price}`}}
+                            {{`￥${productDetail.new_price || ''}`}}
                         </view>
                         <view class="del-price">
-                            {{`￥${productDetail.old_price}`}}
+                            {{`￥${productDetail.old_price || ''}`}}
                         </view>
                     </view>
                 </view>

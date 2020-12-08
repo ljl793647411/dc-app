@@ -3,10 +3,12 @@
         <view class="my-pages-box">
             <view class="head-box">
                 <view class="profile-photo">
-                    <image src=""></image>
+                    <open-data type="userAvatarUrl" lang="zh_CN" />
+                    <!-- <image src=""></image> -->
                 </view>
                 <view class="my-info">
-                    <text class="name">微信名</text>
+                    <!-- <text class="name">微信名</text> -->
+                    <open-data type="userNickName" lang="zh_CN" />
                     <view class="phone-box">
                         <text class="phone">手机号</text>
                         <view class="update-phone-btn">修改</view>

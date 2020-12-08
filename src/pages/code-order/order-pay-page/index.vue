@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import OrderDetail from '@components/order-detail/index'
+import OrderDetail from '@/components/order-detail/index'
 export default {
     data() {
         return {

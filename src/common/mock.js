@@ -83,7 +83,7 @@ const productDetai = {
     "name": "秘制剁椒鱼头王", // 商品名称
     "sales": 30, // 今日销量
     "old_price": 69.00, // 原价
-    "new_price": 49.00, // 现价
+    "": 49.00, // 现价
     selecteed_num: 1, // 已选择的菜品数量
     product_desc: 'balabalbalabla', // 商品简介
 }
@@ -106,6 +106,9 @@ const orderDetail = {
             product_id: 1, // 商品id
             product_price: 44.0, // 商品购买价格
             product_num: 2, // 商品购买数量
+            "img_src": "", // 商品图片
+            "name": "秘制剁椒鱼头王", // 商品名称
+            "sales": 30, // 今日销量
         }
     ]
 }
