@@ -7,7 +7,7 @@
             console.log('App Show')
 		},
 		onHide: function() {
-            this.$u.api.logout()
+            // this.$u.api.logout()
 		}
 	}
 </script>

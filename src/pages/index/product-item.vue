@@ -33,6 +33,12 @@
 
 <script>
 export default {
+    props: {
+        productDetail: {
+            type: Object,
+            default: {}
+        }
+    },
     methods: {
         add() {
             this.$emit('saceCode')

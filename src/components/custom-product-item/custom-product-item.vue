@@ -5,27 +5,27 @@
         </view>
         <view class="right-content">
             <view class="name u-line-1">
-                <text>{{productDetail.name || ''}}</text>
+                <text>{{productData.name || ''}}</text>
             </view>
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
                         <text v-if="type==='default'">
-                            {{`本月销量${productDetail.sales || 0}份`}}
+                            {{`本月销量${productData.sales || 0}份`}}
                         </text>
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            {{`￥${productDetail.new_price || 0}`}}
+                            {{`￥${productData.new_price || 0}`}}
                         </view>
                         <view class="del-price" v-if="type==='default'">
-                            {{`￥${productDetail.old_price || 0}`}}
+                            {{`￥${productData.old_price || 0}`}}
                         </view>
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" @click.stop="subtract">-</view>
-                    <text class="text">{{productDetail.selecteed_num}}</text>
+                    <view class="btn" v-if="productData.selecteed_num > 0" @click.stop="subtract">-</view>
+                    <text class="text">{{productData.selecteed_num}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>

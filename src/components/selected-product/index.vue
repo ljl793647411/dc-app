@@ -5,28 +5,26 @@
                 <view class="message-content-box">
                     <view class="desk-num-info">
                         <text>桌号：</text>
-                        <text>1楼01号</text>
+                        <text>{{shopCartInfo.desk_name || ''}}</text>
                     </view>
                     <view class="eat-people-num">
                         <text>用餐人数：</text>
-                        <text>4人</text>
+                        <text>{{`${shopCartInfo.eat_numb || ''}人`}}</text>
                         <text class="select">请选择用餐人数</text>
                     </view>
                 </view>
                 <view class="bottom-box">
                     <view class="shopping-box">
                         <view class="icon-box" @click="getShoppingList">
-                            <u-badge count="7" :offset="[-8, -8]" bgColor="#E02020"></u-badge>
+                            <u-badge :count="shopCartInfo.selected_num_total" :offset="[-8, -8]" bgColor="#E02020"></u-badge>
                             <image src="/static/img/list-icon.png"></image>
                         </view>
                         <view class="right-box">
                             <view class="price-box">
                                 <text class="rmb">￥</text>
-                                <text class="total">
-                                    216.00
-                                </text>
+                                <text class="total">{{shopCartInfo.total_price || ''}}</text>
                             </view>
-                            <text class="desc">已选择8件菜品</text>
+                            <text class="desc">{{`已选择${shopCartInfo.selected_num_total || 0}件菜品`}}</text>
                         </view>
                     </view>
                     <view class="btn-box" @click="jumpOrderPayment">立即下单</view>
@@ -38,11 +36,11 @@
                     <text class="operaton" @click="clearShoppingList">清空</text>
                 </view>
                 <view class="product" v-for="(item, index) in shoppingList" :key="index">
-                    <product-item type="shopCart"></product-item>
+                    <product-item type="shopCart" :productData="item"></product-item>
                 </view>
                 <view class="extra-price">
                     <text>餐具费：</text>
-                    <text class="price-font-color">￥4</text>
+                    <text class="price-font-color">{{`￥${shopCartInfo.extra_price || ''}`}}</text>
                 </view>
             </view>
         </view>
@@ -54,6 +52,10 @@
     import ProductItem from '@/components/custom-product-item/custom-product-item';
 	export default {
         props: {
+            shopCartInfo: {
+                type: Object,
+                default: {}
+            }
         },
 		data() {
 			return {

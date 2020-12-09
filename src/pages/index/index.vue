@@ -4,8 +4,6 @@
             <view class="banner-home">
                 <image src=""></image>
             </view>
-            <button open-type="getUserInfo" @bindgetuserinfo="getUserInfoHandle">授权</button>
-            <button @click="getsession">111</button>
             <view class="entrance-box">
                 <view class="entrance-item" v-for="item in entranceModule" :key="item.id" @click="funcTrans(item.funcName)">
                     <view class="img">
@@ -30,7 +28,7 @@
 </template>
 
 <script>
-    import { loginFunc } from '@/common/utils'
+    import { loginFunc, checkIsAuth } from '@/common/utils'
     import { HOME_FUNCTION_ENTRANCE } from '@/common/config.js'
     import { saceCode } from '@/common/utils.js'
     import HomeTitle from '@/components/home-title/index'
@@ -41,7 +39,7 @@
 		data() {
 			return {
                 entranceModule: HOME_FUNCTION_ENTRANCE,
-                productList: new Array(9),
+                productList: [],
 			}
         },
         onLoad() {
@@ -61,15 +59,7 @@
             async init() {
                 await loginFunc(this)
                 this.$u.api.hotProduct({store_id: 1}).then(res => {
-                })
-            },
-            getsession() {
-                uni.getUserInfo({
-                    withCredentials: true,
-                    lang: 'zh_CN',
-                    success: (res) => {
-                        console.log('res', res)
-                    }
+                    this.productList = res.hotProduct || []
                 })
             },
             // 跳转列表
@@ -79,15 +69,17 @@
             },
             // 方法转换
             funcTrans(name) {
+                // 如果没有授权，先跳授权页
+                if (!checkIsAuth(this)) {
+                    return
+                }
+
                 switch(name) {
                     case 'jumpCodeOrder':
                         this.jumpCodeOrder()
                         break
                 }
             },
-            getUserInfoHandle(res) {
-                console.log('res', res)
-            }
         }
 	}
 </script>

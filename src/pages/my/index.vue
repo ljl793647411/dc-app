@@ -3,18 +3,19 @@
         <view class="my-pages-box">
             <view class="head-box">
                 <view class="profile-photo">
-                    <open-data type="userAvatarUrl" lang="zh_CN" />
-                    <!-- <image src=""></image> -->
+                    <!-- <open-data type="userAvatarUrl" lang="zh_CN" /> -->
+                    <image :src="vuex_userInfo.userAvatarUrl"></image>
                 </view>
-                <view class="my-info">
-                    <!-- <text class="name">微信名</text> -->
-                    <open-data type="userNickName" lang="zh_CN" />
+                <view class="my-info" v-if="!lodash.isEmpty(vuex_userInfo)">
+                    <text class="name">{{vuex_userInfo.userNickName}}</text>
+                    <!-- <open-data type="userNickName" lang="zh_CN" /> -->
                     <view class="phone-box">
                         <text class="phone">手机号</text>
                         <view class="update-phone-btn">修改</view>
                     </view>
                 </view>
-                <view class="my-info-card">
+                <button v-else open-type="getUserInfo" @getuserinfo="getuserinfoHandle">点击登录</button>
+                <button class="my-info-card">
                     <view class="title-box">
                         <view class="icon">
                             <image src="/static/img/wallet.png"></image>
@@ -50,16 +51,35 @@
                             </view>
                         </view>
                     </view>
-                </view>
+                </button>
             </view>
         </view>
     </view>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { getuserinfoConfig } from '@/common/utils'
 
 export default {
+    data() {
+        return {
 
+        }
+    },
+    computed: {
+        ...mapState({
+            vuex_userInfo: 'vuex_userInfo'
+        }),
+    },
+    onShow() {
+        console.log('dvuex_userInfo', this.vuex_userInfo)
+    },
+    methods: {
+        getuserinfoHandle(e) {
+            getuserinfoConfig(this, e)
+        },
+    }
 }
 </script>
 

@@ -10,6 +10,10 @@ const install = (Vue, vm) => {
 	 */
     const logout = (params = {}) => vm.$u.get("login/logout",params);
 	/**
+	 * 绑定用户信息
+	 */
+    const bindUserInfo = (params = {}) => vm.$u.post("member/add",params);
+	/**
 	 * 首页热门商品
 	 */
     const hotProduct = (params = {}) => vm.$u.get("bookProduct/hotProduct",params);
@@ -31,6 +35,7 @@ const install = (Vue, vm) => {
 	vm.$u.api = {
         login, 
         logout,
+        bindUserInfo,
         hotProduct,
         fuzzySearchGoodsList,
         productList,

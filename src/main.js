@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 import store from '@/store';
+import lodash from 'lodash';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.lodash = lodash;
 
-App.mpType = 'app'
+App.mpType = 'app';
 
 // 引入全局uView
 import uView from 'uview-ui'

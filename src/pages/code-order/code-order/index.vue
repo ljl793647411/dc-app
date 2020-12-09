@@ -23,59 +23,62 @@
 		</view>
 		<view class="u-menu-wrap" v-if="!searchData">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-				 :data-current="index" @tap.stop="swichMenu(index)">
+				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[currentKey==item.child_key ? 'u-tab-item-active' : '']"
+				 :data-current="index" @tap.stop="swichMenu(item, index)">
 					<text class="u-line-1">{{item.name}}</text>
 				</view>
 			</scroll-view>
-			<block v-for="(item,index) in tabbar" :key="index">
-				<scroll-view scroll-y class="right-box" v-if="current==index">
-					<view class="page-view">
-                        <list-component></list-component>
-					</view>
-				</scroll-view>
-			</block>
+            <scroll-view scroll-y class="right-box">
+                <view v-for="(item,index) in tabbarList" :key="index" @click="jumpDetail(item)">
+                    <view v-if="item.parent_key == currentKey" class="page-view">
+                        <product-item :productData="item"></product-item>
+                    </view>
+                </view>
+            </scroll-view>
 		</view>
         <view class="search-list" v-else>
             <view v-for="item in searchList" :key="item" class="search-list-item">
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product :shoppingList="shoppingList"></selected-product>
+        <selected-product :shopCartInfo="shopCartInfo"></selected-product>
 	</view>
 </template>
 
 <script>
-    import classifyData from "@/common/classify.data.js";
-    import ListComponent from './list'
+    // import ListComponent from './list'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
 	export default {
 		data() {
 			return {
-				tabbar: classifyData,
+                tabbar: [], // 分类列表的值
+                tabbarList: [], // 对应列表的值
+                currentKey: '', // 当前应该显示列表的key
 				scrollTop: 0, //tab标题的滚动条位置
-				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
                 menuItemHeight: 0, // 左边菜单item的高度
                 searchData: '', // 搜索框的值
                 searchList: [], // 模糊搜索出来的列表
-                shoppingList: [], // 购物车数据
+                shopCartInfo: {}, // 购物车数据
 			}
-		},
+        },
+        onLoad() {
+            this.getProductList()
+            this.getShopCartInfo()
+        },
 		computed: {
-			
         },
         components: {
-            ListComponent,
+            // ListComponent,
             ProductItem,
             SelectedProduct
         },
 		methods: {
 			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if(index == this.current) return ;
-				this.current = index;
+			async swichMenu(item, index) {
+				if(item.child_key == this.currentKey) return ;
+				this.currentKey = item.child_key;
 				// 如果为0，意味着尚未初始化
 				if(this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('menu-scroll-view', 'menuHeight');
@@ -107,9 +110,46 @@
                         this.searchList = []
                         return;
                     }
-                    this.searchList = new Array(value.length)
+                    const postData = {
+                        store_id: 1,
+                        product_name: value
+                    }
+                    this.$u.api.fuzzySearchGoodsList(postData).then(res => {
+                        if (res) {
+                            this.searchList = res || []
+                        }
+                    })
                 }, 500)
             },
+            // 获取分类列表
+            getProductList() {
+                const postData = {
+                    store_id: 1,
+                    table_id: 1
+                }
+                this.$u.api.productList(postData).then(res => {
+                    if (res) {
+                        this.tabbar = res.category_list || [];
+                        this.tabbarList = res.product_list || [];
+                        if (this.tabbar.length > 0) {
+                            // 赋默认值为第一个菜单的key
+                            this.currentKey = this.tabbar[0].child_key;
+                        }
+                    }
+                })
+            },
+            // 获取购物车信息
+            getShopCartInfo() {
+                const postData = {
+                    store_id: 1,
+                    table_id: 1
+                }
+                this.$u.api.shopCartList(postData).then(res => {
+                    if (res) {
+                        this.shopCartInfo = res;
+                    }
+                })
+            }
 		}
 	}
 </script>
@@ -152,6 +192,7 @@
 	.u-tab-view {
 		width: 93px;
 		height: 100%;
+        background: #f6f6f6;
 	}
 
 	.u-tab-item {

@@ -9,7 +9,7 @@ const install = (Vue, vm) => {
 		originalData: true, 
 		// 设置自定义头部content-type
 		header: {
-		 	'content-type' : 'application/x-www-form-urlencoded'
+		 	'content-type' : 'application/json'
 		} 
 	});
 	// 请求拦截，配置Token等参数
