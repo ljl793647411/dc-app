@@ -29,6 +29,22 @@ const install = (Vue, vm) => {
 	 * 购物车接口
 	 */
     const shopCartList = (params = {}) => vm.$u.get("bookProduct/shopCartList",params);
+	/**
+	 * 订单详情接口
+	 */
+    const getOrderDetail = (params = {}) => vm.$u.get("order/detail",params);
+	/**
+	 * 设置就餐人数
+	 */
+    const setEatNum = (params = {}) => vm.$u.get("order/saveDiners",params);
+	/**
+	 * 修改购物车
+	 */
+    const updateShopCart = (params = {}) => vm.$u.post("order/modifyShopCar",params);
+	/**
+	 * 确认下单
+	 */
+    const addOrder = (params = {}) => vm.$u.get("order/addOrder",params);
     
 	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
@@ -40,6 +56,10 @@ const install = (Vue, vm) => {
         fuzzySearchGoodsList,
         productList,
         shopCartList,
+        getOrderDetail,
+        setEatNum,
+        updateShopCart,
+        addOrder,
 	};
 }
 

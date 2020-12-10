@@ -24,8 +24,8 @@
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" v-if="productData.selecteed_num > 0" @click.stop="subtract">-</view>
-                    <text class="text">{{productData.selecteed_num}}</text>
+                    <view class="btn" v-if="selecteed_num > 0" @click.stop="subtract">-</view>
+                    <text class="text">{{selecteed_num}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>
@@ -49,6 +49,7 @@
         },
 		data() {
 			return {
+                selectedNum:  this.productData.selecteed_num || 0,
 			}
 		},
 		computed: {
@@ -61,7 +62,24 @@
             },
             // 加一件商品
             add() {
-                console.log('add')
+                console.log('this', this)
+                this.selectedNum += 1;
+                this.$u.debounce(() => {
+                    const postData = {
+                        store_id: 1,
+                        table_id: 1,
+                        product_id: this.productData.product_id,
+                        selected_num: this.selectedNum,
+                    }
+                    this.$u.api.updateShopCart(postData).then(res => {
+                        console.log('购物车', res)
+                    }).catch(() => {
+                        uni.showToast({
+                            icon: 'none',
+                            title: '操作失败'
+                        })
+                    })
+                }, 500)
             },
 		}
 	}

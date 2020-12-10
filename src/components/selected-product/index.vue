@@ -16,12 +16,12 @@
                 <view class="bottom-box">
                     <view class="shopping-box">
                         <view class="icon-box" @click="getShoppingList">
-                            <u-badge :count="shopCartInfo.selected_num_total" :offset="[-8, -8]" bgColor="#E02020"></u-badge>
+                            <u-badge :count="shopCartInfo.selected_num_total || 0" :offset="[-8, -8]" bgColor="#E02020"></u-badge>
                             <image src="/static/img/list-icon.png"></image>
                         </view>
                         <view class="right-box">
                             <view class="price-box">
-                                <text class="rmb">￥</text>
+                                <text class="rmb" v-if="shopCartInfo.total_price || shopCartInfo.total_price == 0">￥</text>
                                 <text class="total">{{shopCartInfo.total_price || ''}}</text>
                             </view>
                             <text class="desc">{{`已选择${shopCartInfo.selected_num_total || 0}件菜品`}}</text>
@@ -87,9 +87,19 @@
             closeShoppingModal() {
                 this.showMask = false
             },
-            // 跳转下单页
+            // 跳转订单详情
             jumpOrderPayment() {
-                this.$u.route('/pages/code-order/order-payment/index')
+                const postData = {
+                    store_id: 1
+                }
+                this.$u.api.addOrder(postData).then(res => {
+                    this.$u.route('/pages/code-order/order-detail/index')
+                }).catch(() => {
+                    uni.showToast({
+                        title: '下单失败',
+                        icon: 'none',
+                    })
+                })
             }
 		}
 	}

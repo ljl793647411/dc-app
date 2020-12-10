@@ -1,6 +1,6 @@
 <template>
     <view class="order-pay-page-box">
-        <order-detail title="订单进行中"></order-detail>
+        <order-detail title="订单进行中" :orderDetail="orderDetailData"></order-detail>
         <view class="operation-btn-box">
             <button class="add-btn" @click="jumpProductList">加菜</button>
             <button class="jump-btn" @click="jumpDetail">完成订单</button>
@@ -13,11 +13,14 @@ import OrderDetail from '@/components/order-detail/index'
 export default {
     data() {
         return {
-
+            orderDetailData: {}
         }
     },
     components: {
         OrderDetail
+    },
+    onLoad() {
+        this.getOrderDetail()
     },
     methods: {
         // 跳转选择商品页
@@ -28,6 +31,11 @@ export default {
         jumpDetail() {
             this.$u.route('/pages/code-order/order-detail/index')
         },
+        getOrderDetail() {
+            this.$u.api.getOrderDetail(res => {
+                this.orderDetailData = res || {}
+            })
+        }
     }
 }
 </script>
