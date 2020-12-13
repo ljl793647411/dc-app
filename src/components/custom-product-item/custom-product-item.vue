@@ -24,8 +24,8 @@
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" v-if="selecteed_num > 0" @click.stop="subtract">-</view>
-                    <text class="text">{{selecteed_num}}</text>
+                    <view class="btn" v-if="selected_num > 0" @click.stop="subtract">-</view>
+                    <text class="text">{{selected_num}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>
@@ -49,7 +49,7 @@
         },
 		data() {
 			return {
-                selectedNum:  this.productData.selecteed_num || 0,
+                selectedNum:  this.productData.selected_num || 0,
 			}
 		},
 		computed: {
@@ -71,14 +71,7 @@
                         product_id: this.productData.product_id,
                         selected_num: this.selectedNum,
                     }
-                    this.$u.api.updateShopCart(postData).then(res => {
-                        console.log('购物车', res)
-                    }).catch(() => {
-                        uni.showToast({
-                            icon: 'none',
-                            title: '操作失败'
-                        })
-                    })
+                    this.$u.api.updateShopCart(postData)
                 }, 500)
             },
 		}

@@ -52,7 +52,7 @@ export const loginFunc = (t) => {
         } catch (err) {
             uni.showToast({
                 icon: 'none',
-                title: '网络超时1',
+                title: '网络超时',
                 duration: 2000
             })
         }

@@ -39,7 +39,7 @@ const productList = {
                     "sales": 30, // 今日销量
                     "old_price": 69.00, // 原价
                     "new_price": 49.00, // 现价
-                    selecteed_num: 1, // 已选择的菜品数量
+                    selected_num: 1, // 已选择的菜品数量
                 }
             ]
         }
@@ -54,7 +54,7 @@ const fuzzySearchGoodsList = [
         "sales": 30, // 今日销量
         "old_price": 69.00, // 原价
         "new_price": 49.00, // 现价
-        selecteed_num: 1, // 已选择的菜品数量
+        selected_num: 1, // 已选择的菜品数量
     }
 ]
 // 购物车数据
@@ -72,7 +72,7 @@ const shopCartList = {
             "img_src": "", // 商品图片
             "name": "秘制剁椒鱼头王", // 商品名称
             "new_price": 49.00, // 现价
-            selecteed_num: 1, // 已选择的菜品数量
+            selected_num: 1, // 已选择的菜品数量
          }
      ]
 }
@@ -84,7 +84,7 @@ const productDetai = {
     "sales": 30, // 今日销量
     "old_price": 69.00, // 原价
     "": 49.00, // 现价
-    selecteed_num: 1, // 已选择的菜品数量
+    selected_num: 1, // 已选择的菜品数量
     product_desc: 'balabalbalabla', // 商品简介
 }
 // 订单详情

@@ -23,7 +23,7 @@
                 </view>
                 <view class="btn-box">
                     <view class="btn">-</view>
-                    <text class="text">{{productDetail.selecteed_num}}</text>
+                    <text class="text">{{productDetail.selected_num}}</text>
                     <view class="btn">+</view>
                 </view>
             </view>

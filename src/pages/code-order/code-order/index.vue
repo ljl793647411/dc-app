@@ -46,9 +46,9 @@
 </template>
 
 <script>
-    // import ListComponent from './list'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
+    import socketTask from '@/common/ws.js'
 	export default {
 		data() {
 			return {
@@ -61,20 +61,37 @@
                 searchData: '', // 搜索框的值
                 searchList: [], // 模糊搜索出来的列表
                 shopCartInfo: {}, // 购物车数据
+                wsTask: null, // ws实例
 			}
         },
         onLoad() {
             this.getProductList()
             this.getShopCartInfo()
+            this.checkIsExistOrder()
+            this.wsTask = socketTask(1, 6)
+            this.wsTask.onMessage(this.setShppCartInfo)
+        },
+        onHide() {
+            this.wsTask.close()
         },
 		computed: {
         },
         components: {
-            // ListComponent,
             ProductItem,
             SelectedProduct
         },
 		methods: {
+            // 设置购物车数据
+            setShppCartInfo(res) {
+                try {
+                    this.shopCartInfo = JSON.parse(res.data)
+                } catch (error) {
+                    uni.showToast({
+                        title: '操作失败，请重试',
+                        icon: 'none'
+                    })
+                }
+            },
 			// 点击左边的栏目切换
 			async swichMenu(item, index) {
 				if(item.child_key == this.currentKey) return ;
@@ -154,6 +171,26 @@
             jumpDetail() {
                 this.$u.route('/pages/product-detail/index')
             },
+            // 检查是否有存在中的订单
+            checkIsExistOrder () {
+                const postData = {
+                    store_id: 1,
+                    table_id: 1,
+                }
+                this.$u.api.isExistOrder(postData).then(res => {
+                    if (res.isExist) {
+                        uni.showModal({
+                            title: '提示',
+                            content: '有一笔正在进行中的订单，是否前往查看',
+                            success: () => {
+                                this.$u.route('/pages/code-order/order-detail/index', {
+                                    orderId: res.order_id || 1
+                                })
+                            }
+                        })
+                    }
+                })
+            }
 		}
 	}
 </script>

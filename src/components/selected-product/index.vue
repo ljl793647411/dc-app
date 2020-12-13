@@ -5,7 +5,7 @@
                 <view class="message-content-box">
                     <view class="desk-num-info">
                         <text>桌号：</text>
-                        <text>{{shopCartInfo.desk_name || ''}}</text>
+                        <text>{{shopCartInfo.dest_name || ''}}</text>
                     </view>
                     <view class="eat-people-num">
                         <text>用餐人数：</text>
@@ -33,7 +33,7 @@
                 </view>
                 <view class="bottom-box">
                     <view class="shopping-box">
-                        <view class="icon-box" @click="getShoppingList">
+                        <view class="icon-box" @click="openShopCartModal">
                             <u-badge :count="shopCartInfo.selected_num_total || 0" :offset="[-8, -8]" bgColor="#E02020"></u-badge>
                             <image src="/static/img/list-icon.png"></image>
                         </view>
@@ -56,7 +56,7 @@
                     <text class="title">商品服务</text>
                     <text class="operaton" @click="clearShoppingList">清空</text>
                 </view>
-                <view class="product" v-for="(item, index) in shoppingList" :key="index">
+                <view class="product" v-for="(item, index) in shopCartInfo.selelted_goods_list || []" :key="index">
                     <product-item type="shopCart" :productData="item"></product-item>
                 </view>
                 <view class="extra-price">
@@ -85,7 +85,6 @@
         },
 		data() {
 			return {
-                shoppingList: [],
                 showMask: false,
                 eatNum: '',
 			}
@@ -98,13 +97,12 @@
         },
 		methods: {
             // 获取购物车列表
-            getShoppingList() {
+            openShopCartModal() {
                 if (this.showMask) {
                     this.closeShoppingModal()
                     return
                 }
                 this.showMask = true
-                this.shoppingList = new Array(4)
             },
             // 清空购物车
             clearShoppingList() {
@@ -133,7 +131,7 @@
                 const postData = {
                     store_id: 1,
                     table_id: 1,
-                    eat_numb: this.eatNum
+                    eat_numb: Number(this.eatNum)
                 }
                 this.$u.api.setEatNum(postData).then(() => {
                     this.eatNum = ''
