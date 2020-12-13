@@ -3,10 +3,10 @@
         <view class="detail-box">
             <view class="head-box">
                 <view class="title-box">
-                    <text class="title" v-text="title || ''"></text>
                 </view>
                 <view class="order-info">
-                    <text class="name">醉徽湘</text>
+                    <view class="title">预约点餐订单</view>
+                    <view class="name">醉徽湘</view>
                     <view class="info">
                         <text>桌号：</text>
                         <text>{{orderDetailData.desk_name || ''}}</text>
@@ -21,7 +21,9 @@
                     </view>
                 </view>
             </view>
-            <order-selected-list :orderSelectList="orderDetailData.product_list"></order-selected-list>
+            <view class="order-select-list-margin">
+                <order-selected-list :orderSelectList="orderDetailData.product_list"></order-selected-list>
+            </view>
             <text class="exrat-price">
                 {{`餐具费：${orderDetailData.extra_price || 0}元`}}
             </text>
@@ -65,9 +67,13 @@ export default {
         .detail-box {
             width: 100%;
 
+            .order-select-list-margin {
+                margin-bottom: 4px;
+            }
+
             .head-box {
                 width: 100%;
-                height: 192px;
+                height: 200px;
                 position: relative;
 
                 .title-box {
@@ -75,13 +81,6 @@ export default {
                     height: 108px;
                     background: #E02020;
                     padding: 22px 29px;
-
-                    .title {
-                        font-size: 16px;
-                        font-weight: 600;
-                        color: #FFFFFF;
-                        line-height: 22px;
-                    }
                 }
 
                 .order-info {
@@ -89,13 +88,23 @@ export default {
                     left: 0;
                     right: 0;;
                     margin: auto;
-                    top: 54px;
+                    top: 10px;
                     width: calc(100% - 20px);
                     height: 114px;
                     background-image: url('/static/img/order-bg.png');
                     background-repeat: no-repeat;
                     background-size: 100%;
                     padding: 23px 19px 0;
+
+                    .title {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: rgba(0, 0, 0, 0.85);
+                        line-height: 25px;
+                        padding-bottom: 23px;
+                        display: flex;
+                        justify-content: center;
+                    }
 
                     .info {
                         padding-top: 6px;                    
