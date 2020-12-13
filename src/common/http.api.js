@@ -36,7 +36,7 @@ const install = (Vue, vm) => {
 	/**
 	 * 设置就餐人数
 	 */
-    const setEatNum = (params = {}) => vm.$u.get("order/saveDiners",params);
+    const setEatNum = (params = {}) => vm.$u.post("order/saveDiners",params);
 	/**
 	 * 修改购物车
 	 */

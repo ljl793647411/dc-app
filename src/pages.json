@@ -16,7 +16,13 @@
 			}
 		},
 		{
-			"path": "pages/code-order/detail/index",
+			"path": "pages/mark-an-appoint/code-order/index",
+			"style": {
+				"navigationBarTitleText": "预约点餐"
+			}
+		},
+		{
+			"path": "pages/product-detail/index",
 			"style": {
 				"navigationBarTitleText": "商品详情"
 			}
@@ -40,6 +46,18 @@
 			}
 		},
 		{
+			"path": "pages/mark-an-appoint/order-pay-page/index",
+			"style": {
+				"navigationBarTitleText": "订单支付"
+			}
+		},
+		{
+			"path": "pages/mark-an-appoint/order-detail/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
 			"path": "pages/order/index",
 			"style": {
 				"navigationBarTitleText": "订单管理"
@@ -55,6 +73,12 @@
 			"path": "pages/authorization/index",
 			"style": {
 				"navigationBarTitleText": "授权"
+			}
+		},
+		{
+			"path": "pages/change-door/index",
+			"style": {
+				"navigationBarTitleText": "更换门店"
 			}
 		}
 	],

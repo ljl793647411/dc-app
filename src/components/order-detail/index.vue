@@ -2,7 +2,7 @@
     <view class="detail-box">
         <view class="head-box">
             <view class="title-box">
-                <text class="title" v-text="title"></text>
+                <text class="title" v-text="title || ''"></text>
             </view>
             <view class="order-info">
                 <text class="name">醉徽湘</text>
@@ -20,48 +20,19 @@
                 </view>
             </view>
         </view>
-        <view class="content-box">
-            <view class="total-title">
-                {{`共${orderDetail.product_list.length}件菜品`}}
-            </view>
-            <view v-for="(item, index) in orderDetail.product_list" 
-                :key="index"
-            >
-                <view class="order-info-box" v-if="index < showListNum">
-                    <view class="left-img">
-                        <image :src="item.img_src" class="img" />
-                    </view>
-                    <view class="right-content">
-                        <view class="left-info">
-                            <text class="name">{{item.name || ''}}</text>
-                            <text class="desc">
-                                {{`本月销量${item.sales || 0}份`}}
-                            </text>
-                        </view>
-                        <view class="price-info">
-                            <text class="price">{{`￥${item.product_price}`}}</text>
-                            <text class="num">
-                                {{`x${item.product_num}`}}
-                            </text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-        <view class="more" v-show="dataList.length > 3">
-            <text @click="changeMoreStatus">{{`${openMoreText}(共${dataList.length}件)`}}</text>
-        </view>
+        <order-selected-list :orderSelectList="orderDetail.product_list"></order-selected-list>
         <text class="exrat-price">
-            {{`餐具费：${orderDetail.extra_price}元`}}
+            {{`餐具费：${orderDetail.extra_price || 0}元`}}
         </text>
         <view class="total-price-box">
             <text class="total-text">合计</text>
-            <text class="total-num">{{`￥${orderDetail.total_price}`}}</text>
+            <text class="total-num">{{`￥${orderDetail.total_price || 0}`}}</text>
         </view>
     </view>
 </template>
 
 <script>
+import OrderSelectedList from '@/components/order-detail-select-list/index';
 export default {
     props: {
         title: {
@@ -74,23 +45,14 @@ export default {
     },
     data() {
         return {
-            showListNum: 3, // 展示几条
         }
+    },
+    components: {
+        OrderSelectedList,
     },
     computed: {
-        openMoreText() {
-            return this.showListNum > 3 ? '收起' : '展开'
-        }
     },
     methods: {
-        // 展开收起
-        changeMoreStatus() {
-            if (this.showListNum > 3) {
-                this.showListNum = 3
-            } else {
-                this.showListNum = this.dataList.length
-            }
-        }
     }
 
 }
@@ -148,76 +110,6 @@ export default {
             }
         }
 
-        .content-box {
-            margin: 0 29px;
-            width: calc(100% - 54px);
-            border-top: 2px dashed #D9D9D9;
-            border-bottom: 2px dashed #D9D9D9;
-            .total-title {
-                font-size: 16px;
-                font-weight: 600;
-                color: rgba(0, 0, 0, 0.85);
-                line-height: 22px;
-                padding: 12px 0;
-            }
-            .order-info-box {
-                width: 100%;
-                height: 66px;
-                display: flex;
-                margin-bottom: 14px;
-                .left-img {
-                    width: 66px;
-                    height: 66px;
-                    background: #ccc;
-                }
-                .right-content {
-                    padding: 13px 16px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    flex-wrap: wrap;
-
-                    .left-info {
-                        .name {
-                            font-size: 16px;
-                            font-weight: 500;
-                            color: rgba(0, 0, 0, 0.85);
-                            line-height: 22px;
-                        }
-                        .desc {
-                            font-size: 12px;
-                            font-weight: 400;
-                            color: rgba(0, 0, 0, 0.85);
-                            line-height: 17px;
-                        }
-                    }
-                    .price-info {
-                        .price {
-                            font-size: 14px;
-                            font-weight: 600;
-                            color: rgba(0, 0, 0, 0.85);
-                            line-height: 20px;
-                        }
-                        .num {
-                            font-size: 12px;
-                            font-weight: 400;
-                            color: rgba(0, 0, 0, 0.85);
-                            line-height: 17px;
-                        }
-                    }
-                }
-            }
-        }
-        .more {
-            padding-top: 12px;
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.85);
-            line-height: 20px;
-            text-align: center;
-            width: calc(100% - 54px);
-            margin: 0 29px;
-        }
         .exrat-price {
             width: calc(100% - 54px);
             font-size: 14px;

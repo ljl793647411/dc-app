@@ -41,7 +41,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product :shopCartInfo="shopCartInfo"></selected-product>
+        <selected-product :shopCartInfo="shopCartInfo" scene="markAnAppoint"></selected-product>
 	</view>
 </template>
 
@@ -153,7 +153,7 @@
             // 跳转商品详情
             jumpDetail() {
                 this.$u.route('/pages/product-detail/index')
-            },
+            }
 		}
 	}
 </script>

@@ -9,8 +9,26 @@
                     </view>
                     <view class="eat-people-num">
                         <text>用餐人数：</text>
-                        <text>{{`${shopCartInfo.eat_numb || ''}人`}}</text>
-                        <text class="select">请选择用餐人数</text>
+                        <text>{{`${shopCartInfo.eat_numb || 0}人`}}</text>
+                        <view class="set-eatnum-box">
+                            <u-input
+                                type="number"
+                                palceholder="请输入用餐人数"
+                                v-model="eatNum"
+                                :height="35"
+                                placeholder-style="color: #0000007d;font-size: 14px;lineHeight: 35px"
+                                :custom-style="{
+                                    background: transparent,
+                                    border: none,
+                                    fontSize: '14px',
+                                    height: '35px',
+                                    lineHeight: '35px',
+                                    width: '74px'
+                                }"
+                            >
+                            </u-input>
+                            <text v-if="eatNum" class="ok-btn" @click="setEatNumFunc">确定</text>
+                        </view>
                     </view>
                 </view>
                 <view class="bottom-box">
@@ -27,7 +45,10 @@
                             <text class="desc">{{`已选择${shopCartInfo.selected_num_total || 0}件菜品`}}</text>
                         </view>
                     </view>
-                    <view class="btn-box" @click="jumpOrderPayment">立即下单</view>
+                    <view>
+                        <view class="btn-box" @click="jumpOrderPayment">立即下单</view>
+                        <text v-if="scene == 'markAnAppoint'" class="mark-an-apponitment-text">美味无需等待，到店即可享用</text>
+                    </view>
                 </view>
             </view>
             <view :class="['shopping-list-modal', {'shopping-list-modal-open': showMask}]">
@@ -55,12 +76,18 @@
             shopCartInfo: {
                 type: Object,
                 default: {}
+            },
+            // 调用场景 ['default', 'markAnAppoint']
+            scene: {
+                type: String,
+                default: 'default'
             }
         },
 		data() {
 			return {
                 shoppingList: [],
-                showMask: false
+                showMask: false,
+                eatNum: '',
 			}
 		},
 		computed: {
@@ -99,6 +126,17 @@
                         title: '下单失败',
                         icon: 'none',
                     })
+                })
+            },
+            // 设置就餐人数
+            setEatNumFunc() {
+                const postData = {
+                    store_id: 1,
+                    table_id: 1,
+                    eat_numb: this.eatNum
+                }
+                this.$u.api.setEatNum(postData).then(() => {
+                    this.eatNum = ''
                 })
             }
 		}
@@ -151,6 +189,16 @@
                 .select {
                     color: #7D8699;
                 }
+                .set-eatnum-box {
+                    display: flex;
+                    align-items: center;
+                    margin-left: 12px;
+
+                    .ok-btn {
+                        color: #0081ff;
+                        padding-left: 12px;
+                    }
+                }
             }
         }
 
@@ -171,6 +219,14 @@
                 color: #FFFFFF;
                 line-height: 17px;
                 border-radius: 21px;
+            }
+
+            .mark-an-apponitment-text {
+                padding-top: 2px;
+                font-size: 12px;
+                font-weight: 400;
+                color: #F7B500;
+                line-height: 17px;
             }
 
             .shopping-box {
