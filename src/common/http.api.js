@@ -32,7 +32,7 @@ const install = (Vue, vm) => {
 	/**
 	 * 订单详情接口
 	 */
-    const getOrderDetail = (params = {}) => vm.$u.get("order/detail",params);
+    const getOrderDetail = (params = {}) => vm.$u.post("order/detail",params);
 	/**
 	 * 设置就餐人数
 	 */
@@ -44,11 +44,24 @@ const install = (Vue, vm) => {
 	/**
 	 * 确认下单
 	 */
-    const addOrder = (params = {}) => vm.$u.get("order/addOrder",params);
+    const addOrder = (params = {}) => vm.$u.post("order/confirm",params);
 	/**
 	 * 检查是否有存在中的订单
 	 */
     const isExistOrder = (params = {}) => vm.$u.get("order/findExist",params);
+	/**
+	 * 商品详情
+	 */
+    const getProductDetail = (params = {}) => vm.$u.post("bookProduct/detail",params);
+	/**
+	 * 清空购物车
+	 */
+    const clearShopCart = (params = {}) => vm.$u.post("shopCar/clean",params);
+	/**
+	 * 订单列表
+	 */
+    const getOrderList = (params = {}) => vm.$u.post("order/list",params);
+    
     
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
@@ -64,6 +77,9 @@ const install = (Vue, vm) => {
         updateShopCart,
         addOrder,
         isExistOrder,
+        getProductDetail,
+        clearShopCart,
+        getOrderList,
 	};
 }
 

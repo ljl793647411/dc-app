@@ -21,7 +21,10 @@ export default {
     methods: {
         // 获取订单详情
         getOrderDetail() {
-            this.$u.api.getOrderDetail(res => {
+            const postData = {
+                order_id: 1
+            }
+            this.$u.api.getOrderDetail(postData).then(res => {
                 this.orderDeatilData = res || {}
             })
         }

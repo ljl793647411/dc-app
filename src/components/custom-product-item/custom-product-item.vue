@@ -49,20 +49,27 @@
         },
 		data() {
 			return {
-                selectedNum:  this.productData.selected_num || 0,
+                selectedNum: 0,
 			}
-		},
+        },
+        onLoad() {
+            console.log('selected组件onload')
+            this.init()
+        },
 		computed: {
-			
 		},
 		methods: {
+            // 初始化
+            init() {
+                console.log('this', this)
+                this.selectedNum = this.productData.selected_num || 0;
+            },
             // 减一件商品
             subtract(e) {
                 console.log('subtract')
             },
             // 加一件商品
             add() {
-                console.log('this', this)
                 this.selectedNum += 1;
                 this.$u.debounce(() => {
                     const postData = {

@@ -168,8 +168,10 @@
                 })
             },
             // 跳转商品详情
-            jumpDetail() {
-                this.$u.route('/pages/product-detail/index')
+            jumpDetail(item) {
+                this.$u.route('/pages/product-detail/index', {
+                    producId: item.product_id
+                })
             },
             // 检查是否有存在中的订单
             checkIsExistOrder () {

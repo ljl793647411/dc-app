@@ -5,7 +5,8 @@ const socketTask = (tableId, userId) => {
     let timer = 0;
 
     let ws = uni.connectSocket({
-        url: `ws://zimx52.natappfree.cc/websocket.ws/${tableId}/${userId}`,
+        // url: `ws://zimx52.natappfree.cc/websocket.ws/${tableId}/${userId}`,
+        url: `ws://47.111.184.105/websocket.ws/${tableId}/${userId}`,
         success: () => {}
     })
     ws.onOpen(function () {
@@ -38,7 +39,7 @@ const socketTask = (tableId, userId) => {
         clearTimeout(timer)
     })
 
-    return ws();
+    return ws;
 };
 
 export default socketTask;

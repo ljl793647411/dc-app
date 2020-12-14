@@ -14,17 +14,17 @@
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            {{`￥${productDetail.new_price}`}}
+                            {{`￥${productDetail.new_price || 0}`}}
                         </view>
                         <view class="del-price">
-                            {{`￥${productDetail.old_price}`}}
+                            {{`￥${productDetail.old_price || 0}`}}
                         </view>
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn">-</view>
-                    <text class="text">{{productDetail.selected_num}}</text>
-                    <view class="btn">+</view>
+                    <view class="btn" v-if="selected_num > 0" @click.stop="subtract">-</view>
+                    <text class="text">{{selected_num}}</text>
+                    <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>
         </view>
@@ -50,17 +50,45 @@
         },
         data() {
             return {
-
+                // 已选择的菜品数量
+                selectedNum: 0,
             }
         },
         components: {
             SelectedProduct,
         },
-        mounted() {
-
+        onLoad(options) {
+            const { productId } = options
+            this.getProductDetail({productId})
         },
         methods: {
-
+            // 获取商品详情
+            getProductDetail({productId}) {
+                const postData = {
+                    product_id: productId,
+                    table_id: 1
+                }
+                this.$u.api.getProductDetail(postData).then(res => {
+                    this.orderDeatilData = res || {}
+                })
+            },
+            // 减一件商品
+            subtract(e) {
+                console.log('subtract')
+            },
+            // 加一件商品
+            add() {
+                this.selectedNum += 1;
+                this.$u.debounce(() => {
+                    const postData = {
+                        store_id: 1,
+                        table_id: 1,
+                        product_id: this.productData.product_id,
+                        selected_num: this.selectedNum,
+                    }
+                    this.$u.api.updateShopCart(postData)
+                }, 500)
+            },
         }
 	}
 </script>

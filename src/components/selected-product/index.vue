@@ -5,7 +5,7 @@
                 <view class="message-content-box">
                     <view class="desk-num-info">
                         <text>桌号：</text>
-                        <text>{{shopCartInfo.dest_name || ''}}</text>
+                        <text>{{shopCartInfo.desk_name || ''}}</text>
                     </view>
                     <view class="eat-people-num">
                         <text>用餐人数：</text>
@@ -23,7 +23,7 @@
                                     fontSize: '14px',
                                     height: '35px',
                                     lineHeight: '35px',
-                                    width: '74px'
+                                    width: '30px'
                                 }"
                             >
                             </u-input>
@@ -59,7 +59,7 @@
                 <view class="product" v-for="(item, index) in shopCartInfo.selelted_goods_list || []" :key="index">
                     <product-item type="shopCart" :productData="item"></product-item>
                 </view>
-                <view class="extra-price">
+                <view class="extra-price" v-if="shopCartInfo.selelted_goods_list.length > 0">
                     <text>餐具费：</text>
                     <text class="price-font-color">{{`￥${shopCartInfo.extra_price || ''}`}}</text>
                 </view>
@@ -106,7 +106,15 @@
             },
             // 清空购物车
             clearShoppingList() {
-                this.shoppingList = []
+                const postData = {
+                    store_id: 1,
+                    table_id: 1
+                }
+                try {
+                    this.$u.api.clearShopCart(postData)
+                } catch (error) {
+                    
+                }
             },
             // 关闭购物车弹窗
             closeShoppingModal() {
