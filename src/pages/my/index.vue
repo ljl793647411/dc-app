@@ -3,12 +3,10 @@
         <view class="my-pages-box">
             <view class="head-box">
                 <view class="profile-photo">
-                    <!-- <open-data type="userAvatarUrl" lang="zh_CN" /> -->
-                    <image :src="vuex_userInfo.userAvatarUrl"></image>
+                    <image :src="vuex_userInfo.head_img" class="img"></image>
                 </view>
                 <view class="my-info" v-if="!lodash.isEmpty(vuex_userInfo)">
-                    <text class="name">{{vuex_userInfo.userNickName}}</text>
-                    <!-- <open-data type="userNickName" lang="zh_CN" /> -->
+                    <text class="name">{{vuex_userInfo.member_name}}</text>
                     <view class="phone-box">
                         <text class="phone">手机号</text>
                         <view class="update-phone-btn">修改</view>
@@ -101,8 +99,9 @@ export default {
             .profile-photo {
                 width: 71px;
                 height: 71px;
-                border-radius: 50%;
-                background: #ccc;
+                .img {
+                    border-radius: 50%;
+                }
             }
 
             .my-info {

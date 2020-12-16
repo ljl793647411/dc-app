@@ -31,7 +31,7 @@
             <scroll-view scroll-y class="right-box">
                 <view v-for="(item,index) in tabbarList" :key="index" @click="jumpDetail(item)">
                     <view v-if="item.parent_key == currentKey" class="page-view">
-                        <product-item :productData="item"></product-item>
+                        <product-item :productData="item" :storeId="storeId" :tableId="tableId"></product-item>
                     </view>
                 </view>
             </scroll-view>
@@ -41,7 +41,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product :shopCartInfo="shopCartInfo"></selected-product>
+        <selected-product :shopCartInfo="shopCartInfo" :storeId="storeId" :tableId="tableId"></selected-product>
 	</view>
 </template>
 
@@ -62,13 +62,18 @@
                 searchList: [], // 模糊搜索出来的列表
                 shopCartInfo: {}, // 购物车数据
                 wsTask: null, // ws实例
+                tableId: '', // 桌号id
+                storeId: '', // 门店id
+                userId: '1', // 用户id
 			}
         },
-        onLoad() {
+        onLoad(options) {
+            this.tableId = options.table_id || 1;
+            this.storeId = options.store_id || 1;
             this.getProductList()
             this.getShopCartInfo()
             this.checkIsExistOrder()
-            this.wsTask = socketTask(1, 6)
+            this.wsTask = socketTask(this.table_id, this.userId); // table_id和user_id
             this.wsTask.onMessage(this.setShppCartInfo)
         },
         onHide() {
@@ -128,7 +133,8 @@
                         return;
                     }
                     const postData = {
-                        store_id: 1,
+                        store_id: this.storeId,
+                        table_id: this.tableId,
                         product_name: value
                     }
                     this.$u.api.fuzzySearchGoodsList(postData).then(res => {
@@ -141,8 +147,8 @@
             // 获取分类列表
             getProductList() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1
+                    store_id: this.storeId,
+                    table_id: this.tableId
                 }
                 this.$u.api.productList(postData).then(res => {
                     if (res) {
@@ -158,8 +164,8 @@
             // 获取购物车信息
             getShopCartInfo() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1
+                    store_id: this.storeId,
+                    table_id: this.tableId
                 }
                 this.$u.api.shopCartList(postData).then(res => {
                     if (res) {
@@ -170,14 +176,15 @@
             // 跳转商品详情
             jumpDetail(item) {
                 this.$u.route('/pages/product-detail/index', {
-                    producId: item.product_id
+                    table_id: this.tableId,
+                    productId: item.product_id || ''
                 })
             },
             // 检查是否有存在中的订单
             checkIsExistOrder () {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1,
+                    store_id: this.storeId,
+                    table_id: this.tableId
                 }
                 this.$u.api.isExistOrder(postData).then(res => {
                     if (res.isExist) {

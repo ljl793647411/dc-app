@@ -43,7 +43,6 @@ export const loginFunc = (t) => {
                 code: wxRes.code || ''
             }
             const res = await t.$u.api.login(postData);
-            console.log('res', res)
             if (!_isEmpty(res.member)) {
                 t.$store.commit('setUserInfo', res.member)
             }

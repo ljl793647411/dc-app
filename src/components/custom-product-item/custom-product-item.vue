@@ -24,8 +24,8 @@
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" v-if="selected_num > 0" @click.stop="subtract">-</view>
-                    <text class="text">{{selected_num}}</text>
+                    <view class="btn" v-if="selectedNum > 0" @click.stop="subtract">-</view>
+                    <text class="text" v-if="selectedNum > 0">{{selectedNum}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>
@@ -45,42 +45,57 @@
             type: {
                 type: String,
                 default: 'default'
-            }
+            },
+            storeId: {
+                type: String | Number
+            },
+            tableId: {
+                type: String | Number
+            },
         },
 		data() {
 			return {
                 selectedNum: 0,
 			}
         },
-        onLoad() {
-            console.log('selected组件onload')
-            this.init()
+        mounted() {
+            this.init();
         },
 		computed: {
 		},
 		methods: {
             // 初始化
             init() {
-                console.log('this', this)
                 this.selectedNum = this.productData.selected_num || 0;
             },
             // 减一件商品
-            subtract(e) {
-                console.log('subtract')
+            subtract() {
+                this.requestShopCart('sub')
             },
             // 加一件商品
             add() {
-                this.selectedNum += 1;
+                this.requestShopCart('add')
+            },
+            requestShopCart() {
                 this.$u.debounce(() => {
                     const postData = {
-                        store_id: 1,
-                        table_id: 1,
+                        store_id: this.storeId,
+                        table_id: this.tableId,
                         product_id: this.productData.product_id,
-                        selected_num: this.selectedNum,
+                        selected_num: this.selectedNum + 1,
                     }
-                    this.$u.api.updateShopCart(postData)
+                    this.$u.api.updateShopCart(postData).then(() => {
+                        switch(type) {
+                            case 'add':
+                                this.selectedNum += 1;
+                                break;
+                            case 'sub':
+                                this.selectedNum -= 1;
+                                break;
+                        }
+                    })
                 }, 500)
-            },
+            }
 		}
 	}
 </script>
@@ -150,6 +165,7 @@
                     width: 64px;
                     height: 100%;
                     display: flex;
+                    justify-content: flex-end;
 
                     .btn {
                         width: 20px;

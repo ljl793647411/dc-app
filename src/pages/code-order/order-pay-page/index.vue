@@ -13,23 +13,30 @@ import OrderDetail from '@/components/order-detail/index'
 export default {
     data() {
         return {
-            orderDetailData: {}
+            orderDetailData: {},
+            orderId: '',
         }
     },
     components: {
         OrderDetail
     },
-    onLoad() {
-        this.getOrderDetail()
+    onLoad(options) {
+        this.orderId = options.orderId;
+        this.getOrderDetail();
     },
     methods: {
         // 跳转选择商品页
         jumpProductList() {
-            this.$u.route('/pages/code-order/code-order/index')
+            this.$u.route('/pages/code-order/code-order/index', {
+                tableId: this.orderDetailData.table_id || '',
+                storeId: this.orderDetailData.store_id || '',
+            })
         },
         // 完成订单跳转订单详情
         jumpDetail() {
-            this.$u.route('/pages/code-order/order-detail/index')
+            this.$u.route('/pages/code-order/order-detail/index', {
+                orderId: this.orderId || ''
+            })
         },
         getOrderDetail() {
             this.$u.api.getOrderDetail(res => {

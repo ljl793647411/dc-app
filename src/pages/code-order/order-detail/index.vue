@@ -9,20 +9,22 @@ import OrderDetail from '@/components/order-detail/index'
 export default {
     data() {
         return {
-            orderDeatilData: {}
+            orderDeatilData: {},
+            orderId: '', // 订单id
         }
     },
     components: {
         OrderDetail
     },
     onLoad() {
+        this.orderId = options.orderId || 1
         this.getOrderDetail()
     },
     methods: {
         // 获取订单详情
         getOrderDetail() {
             const postData = {
-                order_id: 1
+                order_id: this.orderId
             }
             this.$u.api.getOrderDetail(postData).then(res => {
                 this.orderDeatilData = res || {}

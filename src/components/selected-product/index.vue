@@ -57,7 +57,7 @@
                     <text class="operaton" @click="clearShoppingList">清空</text>
                 </view>
                 <view class="product" v-for="(item, index) in shopCartInfo.selelted_goods_list || []" :key="index">
-                    <product-item type="shopCart" :productData="item"></product-item>
+                    <product-item type="shopCart" :productData="item" :storeId="storeId" :tableId="tableId"></product-item>
                 </view>
                 <view class="extra-price" v-if="shopCartInfo.selelted_goods_list.length > 0">
                     <text>餐具费：</text>
@@ -81,7 +81,14 @@
             scene: {
                 type: String,
                 default: 'default'
-            }
+            },
+            storeId: {
+                type: String | Number
+            },
+            tableId: {
+                type: String | Number
+            },
+            
         },
 		data() {
 			return {
@@ -107,8 +114,8 @@
             // 清空购物车
             clearShoppingList() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1
+                    store_id: this.storeId,
+                    table_id: this.tableId
                 }
                 try {
                     this.$u.api.clearShopCart(postData)
@@ -123,10 +130,13 @@
             // 跳转订单详情
             jumpOrderPayment() {
                 const postData = {
-                    store_id: 1
+                    store_id: this.storeId,
+                    table_id: this.tableId
                 }
                 this.$u.api.addOrder(postData).then(res => {
-                    this.$u.route('/pages/code-order/order-detail/index')
+                    this.$u.route('/pages/code-order/order-detail/index', {
+                        orderId: res.order_id || ''
+                    })
                 }).catch(() => {
                     uni.showToast({
                         title: '下单失败',
@@ -137,8 +147,8 @@
             // 设置就餐人数
             setEatNumFunc() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1,
+                    store_id: this.storeId,
+                    table_id: this.tableId,
                     eat_numb: Number(this.eatNum)
                 }
                 this.$u.api.setEatNum(postData).then(() => {

@@ -41,14 +41,18 @@ export default {
        OrderItem, 
     },
     mounted() {
-        this.mock()
+        this.getOrderList()
     },
     methods: {
         // tab切换
         tabsChange(index) {
             this.current = index
-            this.mock()
         },
+        getOrderList() {
+            this.$u.api.getOrderList().then(res => {
+                console.log('res', res)
+            })
+        }
     }
 
 }
