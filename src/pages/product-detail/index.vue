@@ -1,23 +1,23 @@
 <template>
     <view class="product-detail-box shopping-show-active">
         <view class="img-head">
-            <image :src="productData.img_src" />
+            <image :src="orderDeatilData.img_src" />
         </view>
         <view class="detail-content">
             <view class="name u-line-1">
-                <text>{{productDetail.name || ''}}</text>
+                <text>{{orderDeatilData.name || ''}}</text>
             </view>
             <view class="content-bottom">
                 <view class="desc-box">
                     <view class="desc">
-                        {{`本月销量${productDetail.sales || 0}份`}}
+                        {{`本月销量${orderDeatilData.sales || 0}份`}}
                     </view>
                     <view class="price-box">
                         <view class="price">
-                            {{`￥${productDetail.new_price || 0}`}}
+                            {{`￥${orderDeatilData.new_price || 0}`}}
                         </view>
                         <view class="del-price">
-                            {{`￥${productDetail.old_price || 0}`}}
+                            {{`￥${orderDeatilData.old_price || 0}`}}
                         </view>
                     </view>
                 </view>
@@ -33,25 +33,22 @@
                 商品简介
             </view>
             <view class="content">
-                {{productDetail.product_desc || ''}}
+                {{orderDeatilData.product_desc || ''}}
             </view>
         </view>
-        <selected-product></selected-product>
+        <selected-product :shopCartInfo="vuex_sandCodeShopCartList" :storeId="storeId" :tableId="tableId"></selected-product>
     </view>
 </template>
 <script>
     import SelectedProduct from '@/components/selected-product/index';
+    import { mapState } from 'vuex';
 	export default {
-        props: {
-            productDetail: {
-                type: Object,
-                default: {}
-            }
-        },
         data() {
             return {
                 // 已选择的菜品数量
                 selectedNum: 0,
+                tableId: '', // 桌号id
+                storeId: '', // 门店id
             }
         },
         components: {
@@ -59,23 +56,28 @@
         },
         onLoad(options) {
             const { productId } = options
+            this.tableId = options.tableId ? Number(options.tableId) : 1;
+            this.storeId = options.storeId ? Number(options.storeId) : 1;
             this.getProductDetail({productId})
-            this.init()
+        },
+        computed: {
+            ...mapState({
+                vuex_sandCodeShopCartList: 'vuex_sandCodeShopCartList', // 购物车数据
+            }),
         },
         methods: {
             // 获取商品详情
             getProductDetail({productId}) {
                 const postData = {
-                    product_id: productId,
-                    table_id: 1
+                    product_id: Number(productId),
+                    tableId: this.tableId,
+                    storeId: this.storeId,
                 }
                 this.$u.api.getProductDetail(postData).then(res => {
+                    console.log('res', res)
                     this.orderDeatilData = res || {}
+                    this.selectedNum = res.selected_num || 0
                 })
-            },
-            // 初始化
-            init() {
-                this.selectedNum = this.orderDeatilData.selected_num || 0;
             },
             // 减一件商品
             subtract() {
@@ -88,8 +90,8 @@
             requestShopCart() {
                 this.$u.debounce(() => {
                     const postData = {
-                        store_id: 1,
-                        table_id: 1,
+                        tableId: this.tableId,
+                        storeId: this.storeId,
                         product_id: this.productData.product_id,
                         selected_num: this.selectedNum + 1,
                     }

@@ -76,7 +76,7 @@
             add() {
                 this.requestShopCart('add')
             },
-            requestShopCart() {
+            requestShopCart(type) {
                 this.$u.debounce(() => {
                     const postData = {
                         store_id: this.storeId,

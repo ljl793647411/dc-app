@@ -41,7 +41,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product :shopCartInfo="shopCartInfo" :storeId="storeId" :tableId="tableId"></selected-product>
+        <selected-product :shopCartInfo="vuex_sandCodeShopCartList" :storeId="storeId" :tableId="tableId"></selected-product>
 	</view>
 </template>
 
@@ -49,6 +49,7 @@
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
     import socketTask from '@/common/ws.js'
+    import { mapState } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -60,26 +61,36 @@
                 menuItemHeight: 0, // 左边菜单item的高度
                 searchData: '', // 搜索框的值
                 searchList: [], // 模糊搜索出来的列表
-                shopCartInfo: {}, // 购物车数据
                 wsTask: null, // ws实例
                 tableId: '', // 桌号id
                 storeId: '', // 门店id
-                userId: '1', // 用户id
+                init: true,
 			}
         },
         onLoad(options) {
-            this.tableId = options.table_id || 1;
-            this.storeId = options.store_id || 1;
+            this.tableId = options.tableId ? Number(options.tableId) : 1;
+            this.storeId = options.storeId ? Number(options.storeId) : 1;
             this.getProductList()
             this.getShopCartInfo()
             this.checkIsExistOrder()
-            this.wsTask = socketTask(this.table_id, this.userId); // table_id和user_id
-            this.wsTask.onMessage(this.setShppCartInfo)
+        },
+        onShow() {
+            console.log('this.init', this.init)
+            if (this.init) {
+                this.wsTask = socketTask(this.tableId, this.vuex_userInfo.member_id); // table_id和user_id
+                this.wsTask.onMessage(this.setShppCartInfo)
+                this.init = false
+            }
         },
         onHide() {
             this.wsTask.close()
+            this.init = true
         },
 		computed: {
+            ...mapState({
+                vuex_userInfo: 'vuex_userInfo',
+                vuex_sandCodeShopCartList: 'vuex_sandCodeShopCartList', // 购物车数据
+            }),
         },
         components: {
             ProductItem,
@@ -89,7 +100,10 @@
             // 设置购物车数据
             setShppCartInfo(res) {
                 try {
-                    this.shopCartInfo = JSON.parse(res.data)
+                    const data = JSON.parse(res.data)
+                    console.log('data', data)
+                    this.$store.commit('setSandCodeShopCartList', JSON.parse(data.shopCarJson))
+                    this.tabbarList = data.product_list;
                 } catch (error) {
                     uni.showToast({
                         title: '操作失败，请重试',
@@ -169,14 +183,15 @@
                 }
                 this.$u.api.shopCartList(postData).then(res => {
                     if (res) {
-                        this.shopCartInfo = res;
+                        this.$store.commit('setSandCodeShopCartList', res)
                     }
                 })
             },
             // 跳转商品详情
             jumpDetail(item) {
                 this.$u.route('/pages/product-detail/index', {
-                    table_id: this.tableId,
+                    tableId: this.tableId,
+                    storeId: this.storeId,
                     productId: item.product_id || ''
                 })
             },
@@ -191,10 +206,12 @@
                         uni.showModal({
                             title: '提示',
                             content: '有一笔正在进行中的订单，是否前往查看',
-                            success: () => {
-                                this.$u.route('/pages/code-order/order-detail/index', {
-                                    orderId: res.order_id || 1
-                                })
+                            success: (res) => {
+                                if (res.confirm) {
+                                    this.$u.route('/pages/code-order/order-detail/index', {
+                                        orderId: res.order_id || 1
+                                    })
+                                }
                             }
                         })
                     }

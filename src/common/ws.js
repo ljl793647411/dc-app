@@ -7,6 +7,7 @@ const socketTask = (tableId, userId) => {
     let ws = uni.connectSocket({
         // url: `ws://zimx52.natappfree.cc/websocket.ws/${tableId}/${userId}`,
         url: `ws://47.111.184.105/websocket.ws/${tableId}/${userId}`,
+        // url: `ws://bah95r.natappfree.cc/websocket.ws/${tableId}/${6}`,
         success: () => {}
     })
     ws.onOpen(function () {
@@ -16,15 +17,18 @@ const socketTask = (tableId, userId) => {
         }
     })
     ws.onError(function () {
+        clearTimeout(timer)
         console.log('WebSocket连接打开失败，请检查！', res);
     });
 
     function start () {
+        clearTimeout(timer)
         timer = setTimeout(() => {
             ws.send({
                 data: 'ping',
                 success: res => {
                     console.log('连接中....');
+                    start();
                 },
                 fail: err => {
                     console.log('连接失败重新连接....');
@@ -37,6 +41,7 @@ const socketTask = (tableId, userId) => {
     ws.onClose(function () {
         isOpen = false;
         clearTimeout(timer)
+        console.log('关闭连接....');
     })
 
     return ws;

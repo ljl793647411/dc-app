@@ -134,7 +134,7 @@
                     table_id: this.tableId
                 }
                 this.$u.api.addOrder(postData).then(res => {
-                    this.$u.route('/pages/code-order/order-detail/index', {
+                    this.$u.route('/pages/code-order/order-pay-page/index', {
                         orderId: res.order_id || ''
                     })
                 }).catch(() => {

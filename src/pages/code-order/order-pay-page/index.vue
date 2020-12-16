@@ -23,7 +23,7 @@ export default {
     onLoad(options) {
         this.orderId = options.orderId;
         this.getOrderDetail();
-    },
+    },  
     methods: {
         // 跳转选择商品页
         jumpProductList() {
@@ -39,7 +39,10 @@ export default {
             })
         },
         getOrderDetail() {
-            this.$u.api.getOrderDetail(res => {
+            const postData = {
+                order_id: Number(this.orderId)
+            }
+            this.$u.api.getOrderDetail(postData).then(res => {
                 this.orderDetailData = res || {}
             })
         }

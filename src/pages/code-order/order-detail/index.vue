@@ -16,7 +16,7 @@ export default {
     components: {
         OrderDetail
     },
-    onLoad() {
+    onLoad(options) {
         this.orderId = options.orderId || 1
         this.getOrderDetail()
     },
@@ -24,7 +24,7 @@ export default {
         // 获取订单详情
         getOrderDetail() {
             const postData = {
-                order_id: this.orderId
+                order_id: Number(this.orderId)
             }
             this.$u.api.getOrderDetail(postData).then(res => {
                 this.orderDeatilData = res || {}
