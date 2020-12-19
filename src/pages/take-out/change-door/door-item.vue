@@ -17,9 +17,10 @@
                     </view>
                 </view>
                 <view class="right-icon">
-                    <view class="icon border-right">
+                    <view class="icon">
                         <image src=""></image>
                     </view>
+                    <view class="line"></view>
                     <view class="icon">
                         <image src=""></image>
                     </view>
@@ -76,7 +77,7 @@ export default {
                     line-height: 17px;
                 }
             }
-            .right-box {
+            .right-icon {
                 width: 77px;
                 display: flex;
                 align-items: center;
@@ -85,8 +86,10 @@ export default {
                     height: 19px;
                     background: #7D8699;
                 }
-                .border-right {
-                    border-right: 1px solid #7D8699;
+                .line {
+                    width: 1px;
+                    height: 19px;
+                    background: #7D8699;
                 }
             }
             

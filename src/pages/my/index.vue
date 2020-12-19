@@ -8,7 +8,7 @@
                 <view class="my-info" v-if="!lodash.isEmpty(vuex_userInfo)">
                     <text class="name">{{vuex_userInfo.member_name}}</text>
                     <view class="phone-box">
-                        <text class="phone">手机号</text>
+                        <text class="phone">{{vuex_cellphone}}</text>
                         <view class="update-phone-btn">修改</view>
                     </view>
                 </view>
@@ -67,7 +67,8 @@ export default {
     },
     computed: {
         ...mapState({
-            vuex_userInfo: 'vuex_userInfo'
+            vuex_userInfo: 'vuex_userInfo',
+            vuex_cellphone: 'vuex_cellphone',
         }),
     },
     onShow() {

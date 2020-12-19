@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import { loginFunc, checkIsAuth } from '@/common/utils'
+    import { loginFunc, checkIsAuth, checkIsAuthCellphone } from '@/common/utils'
     import { HOME_FUNCTION_ENTRANCE } from '@/common/config.js'
     import { saceCode } from '@/common/utils.js'
     import HomeTitle from '@/components/home-title/index'
@@ -62,21 +62,44 @@
                     this.productList = res.hotProduct || []
                 })
             },
+            // 跳转
+            jump(url, params) {
+                this.$u.route(url, params)
+            },
             // 跳转列表
-            jumpCodeOrder() {
+            jumpCodeOrder(url, params) {
                 const { result } = saceCode()
-                this.$u.route('/pages/code-order/code-order/index')
+                this.jump(url, params)
+            },
+            checkCellphone(url, params) {
+                if (!checkIsAuthCellphone(this)) {
+                    return
+                }
+                this.jump(url, params)
             },
             // 方法转换
             funcTrans(name) {
                 // 如果没有授权，先跳授权页
-                if (!checkIsAuth(this)) {
-                    return
-                }
+                // if (!checkIsAuth(this)) {
+                //     return
+                // }
 
                 switch(name) {
+                    // 扫码点餐
                     case 'jumpCodeOrder':
-                        this.jumpCodeOrder()
+                        this.jumpCodeOrder('/pages/code-order/code-order/index')
+                        break
+                    // 预约点餐
+                    case 'jumpReserve':
+                        this.checkCellphone('/pages/mark-an-appoint/home-page/index')
+                        break
+                    // 外卖
+                    case 'jumpTakeout':
+                        this.checkCellphone('/pages/take-out/change-door/index')
+                        break
+                    // 家宴
+                    case 'jumpTheDoor':
+                        this.checkCellphone('/pages/the-door/index/index')
                         break
                 }
             },

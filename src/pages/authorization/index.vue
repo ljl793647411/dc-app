@@ -4,17 +4,34 @@
             <view class="logo-img">
                 <image src="/static/img/logo.png"></image>
             </view>
-            <text class="desc">申请获得您的公开信息（昵称、头像等）</text>
-            <button class="auth-btn" open-type="getUserInfo" @getuserinfo="getuserinfoHandle">微信授权</button>
+            <text class="desc">{{title}}</text>
+            <button v-if="type === 'default'" class="auth-btn" open-type="getUserInfo" @getuserinfo="getuserinfoHandle">微信授权</button>
+            <button v-if="type === 'cellphone'" class="auth-btn" open-type="getPhoneNumber" @getphonenumber="getCellphoneHandle">微信授权</button>
         </view>
     </view>
 </template>
 <script>
-import { getuserinfoConfig } from '@/common/utils'
+import { getuserinfoConfig, getCellphoneHandle } from '@/common/utils'
 export default {
+    data() {
+        return {
+            title: '申请获得您的公开信息（昵称、头像等）',
+            type: 'default'
+        }
+    },
+    onLoad(options) {
+        const { getType } = options;
+        if (getType === 'cellphone') {
+            this.type = 'cellphone'
+            this.title = '申请获得您的手机号'
+        }
+    },
     methods: {
         getuserinfoHandle(e) {
             getuserinfoConfig(this, e)
+        },
+        getCellphoneHandle(e) {
+            getCellphoneHandle(this, e)
         },
     }
 }

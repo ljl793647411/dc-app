@@ -59,6 +59,7 @@
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "regenerator-runtime": "^0.12.1",
     "uview-ui": "^1.8.2",
     "vue": "^2.6.11",

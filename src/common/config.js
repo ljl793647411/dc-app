@@ -11,20 +11,20 @@ export const HOME_FUNCTION_ENTRANCE = [
         imgSrc: '/static/img/reserve.png',
         title: '预约点餐',
         desc: '免等待,到店即食',
-        funcName: ''
+        funcName: 'jumpReserve'
     },
     {
         id: 3,
         imgSrc: '/static/img/take-out.png',
         title: '外卖',
         desc: '送餐上门服务',
-        funcName: ''
+        funcName: 'jumpTakeout'
     },
     {
         id: 4,
         imgSrc: '/static/img/the-door.png',
         title: '家宴服务',
         desc: '上门服务更舒心',
-        funcName: ''
+        funcName: 'jumpTheDoor'
     },
 ]

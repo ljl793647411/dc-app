@@ -82,12 +82,54 @@ export const getuserinfoConfig = (t, e) => {
         })
     }
 }
+
+/**
+ * @description 获取手机号码回调
+ * @param {object} e button事件对象
+ */
+export const getCellphoneHandle = (t, e) => {
+    const detail = e.detail || null;
+    console.log('e', e)
+    if (detail) {
+        t.$store.commit('setCellphone', detail.userInfo)
+        // const postData = {
+        //     encryptedData: detail.encryptedData,
+        //     rawData: detail.rawData,
+        //     signature: detail.signature,
+        //     iv: detail.iv,
+        // }
+        // t.$u.api.bindUserInfo(postData).then(res => {
+        //     uni.showToast({
+        //         title: '授权成功',
+        //         success: () => {
+        //             t.$u.route('/pages/index/index')
+        //         }
+        //     })
+        // })
+    }
+}
+
 /**
  * @description 校验是否授权
  */
 export const checkIsAuth = (t) => {
     if (isEmpty(t.$store.state.vuex_userInfo)) {
-        t.$u.route('/pages/index/index')
+        t.$u.route('/pages/authorization/index', {
+            getType: 'default'
+        })
+        return false
+    } else {
+        return true
+    }
+}
+/**
+ * @description 校验是否授权手机号
+ */
+export const checkIsAuthCellphone = (t) => {
+    if (isEmpty(t.$store.state.vuex_cellphone)) {
+        t.$u.route('/pages/authorization/index', {
+            getType: 'cellphone'
+        })
         return false
     } else {
         return true

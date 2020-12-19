@@ -13,7 +13,7 @@
                         <view class="set-eatnum-box">
                             <u-input
                                 type="number"
-                                palceholder="请输入用餐人数"
+                                placeholder="请输入用餐人数"
                                 v-model="eatNum"
                                 :height="35"
                                 placeholder-style="color: #0000007d;font-size: 14px;lineHeight: 35px"
@@ -45,7 +45,7 @@
                             <text class="desc">{{`已选择${shopCartInfo.selected_num_total || 0}件菜品`}}</text>
                         </view>
                     </view>
-                    <view>
+                    <view class="submit-order-box">
                         <view class="btn-box" @click="jumpOrderPayment">立即下单</view>
                         <text v-if="scene == 'markAnAppoint'" class="mark-an-apponitment-text">美味无需等待，到店即可享用</text>
                     </view>
@@ -328,6 +328,12 @@
 
         .shopping-list-modal-open {
             top: -434px;
+        }
+
+        .submit-order-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
     }

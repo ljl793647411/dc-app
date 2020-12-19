@@ -3,7 +3,7 @@
 		<view class="u-search-box">
             <u-input
                 class="search-input"
-                palceholder="搜索商品名称"
+                placeholder="搜索商品名称"
                 v-model="searchData"
                 :height="35"
                 @input="changeHandle"

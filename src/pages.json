@@ -76,9 +76,21 @@
 			}
 		},
 		{
-			"path": "pages/change-door/index",
+			"path": "pages/mark-an-appoint/home-page/index",
+			"style": {
+				"navigationBarTitleText": "预约点餐"
+			}
+		},
+		{
+			"path": "pages/take-out/change-door/index",
 			"style": {
 				"navigationBarTitleText": "更换门店"
+			}
+		},
+		{
+			"path": "pages/the-door/index/index",
+			"style": {
+				"navigationBarTitleText": "家宴服务"
 			}
 		}
 	],
