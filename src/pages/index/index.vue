@@ -72,9 +72,9 @@
                 this.jump(url, params)
             },
             checkCellphone(url, params) {
-                if (!checkIsAuthCellphone(this)) {
-                    return
-                }
+                // if (!checkIsAuthCellphone(this)) {
+                //     return
+                // }
                 this.jump(url, params)
             },
             // 方法转换

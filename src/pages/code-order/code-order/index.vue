@@ -75,7 +75,6 @@
             this.checkIsExistOrder()
         },
         onShow() {
-            console.log('this.init', this.init)
             if (this.init) {
                 this.wsTask = socketTask(this.tableId, this.vuex_userInfo.member_id); // table_id和user_id
                 this.wsTask.onMessage(this.setShppCartInfo)
@@ -101,7 +100,6 @@
             setShppCartInfo(res) {
                 try {
                     const data = JSON.parse(res.data)
-                    console.log('data', data)
                     this.$store.commit('setSandCodeShopCartList', JSON.parse(data.shopCarJson))
                     this.tabbarList = data.product_list;
                 } catch (error) {
