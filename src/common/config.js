@@ -28,3 +28,7 @@ export const HOME_FUNCTION_ENTRANCE = [
         funcName: 'jumpTheDoor'
     },
 ]
+
+export const STORE_ID = 8;
+export const TABLE_ID = 5;
+

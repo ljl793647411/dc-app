@@ -49,6 +49,7 @@
     // import ListComponent from './list'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
+    import { STORE_ID, TABLE_ID } from '@/common/config'
 	export default {
 		data() {
 			return {
@@ -111,7 +112,7 @@
                         return;
                     }
                     const postData = {
-                        store_id: 1,
+                        store_id: STORE_ID,
                         product_name: value
                     }
                     this.$u.api.fuzzySearchGoodsList(postData).then(res => {
@@ -124,8 +125,8 @@
             // 获取分类列表
             getProductList() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1
+                    store_id: STORE_ID,
+                    table_id: TABLE_ID
                 }
                 this.$u.api.productList(postData).then(res => {
                     if (res) {
@@ -141,8 +142,8 @@
             // 获取购物车信息
             getShopCartInfo() {
                 const postData = {
-                    store_id: 1,
-                    table_id: 1
+                    store_id: STORE_ID,
+                    table_id: TABLE_ID
                 }
                 this.$u.api.shopCartList(postData).then(res => {
                     if (res) {

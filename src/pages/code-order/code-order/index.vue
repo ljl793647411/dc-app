@@ -50,6 +50,7 @@
     import SelectedProduct from '@/components/selected-product/index';
     import socketTask from '@/common/ws.js'
     import { mapState } from 'vuex';
+    import { STORE_ID, TABLE_ID } from '@/common/config'
 	export default {
 		data() {
 			return {
@@ -68,8 +69,9 @@
 			}
         },
         onLoad(options) {
-            this.tableId = options.tableId ? Number(options.tableId) : 1;
-            this.storeId = options.storeId ? Number(options.storeId) : 1;
+            console.log('options', options)
+            this.tableId = options.tableId ? Number(options.tableId) : TABLE_ID;
+            this.storeId = options.storeId ? Number(options.storeId) : STORE_ID;
             this.getProductList()
             this.getShopCartInfo()
             this.checkIsExistOrder()

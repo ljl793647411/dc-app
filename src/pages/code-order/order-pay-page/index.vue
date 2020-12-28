@@ -10,6 +10,7 @@
 
 <script>
 import OrderDetail from '@/components/order-detail/index'
+import { STORE_ID, TABLE_ID } from '@/common/config'
 export default {
     data() {
         return {
@@ -28,8 +29,8 @@ export default {
         // 跳转选择商品页
         jumpProductList() {
             this.$u.route('/pages/code-order/code-order/index', {
-                tableId: this.orderDetailData.table_id || '',
-                storeId: this.orderDetailData.store_id || '',
+                tableId: this.orderDetailData.table_id || TABLE_ID,
+                storeId: this.orderDetailData.store_id || STORE_ID,
             })
         },
         // 完成订单跳转订单详情

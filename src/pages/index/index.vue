@@ -80,9 +80,9 @@
             // 方法转换
             funcTrans(name) {
                 // 如果没有授权，先跳授权页
-                // if (!checkIsAuth(this)) {
-                //     return
-                // }
+                if (!checkIsAuth(this)) {
+                    return
+                }
 
                 switch(name) {
                     // 扫码点餐
