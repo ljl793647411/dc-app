@@ -49,7 +49,6 @@
     // import ListComponent from './list'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
-    import { STORE_ID, TABLE_ID } from '@/common/config'
 	export default {
 		data() {
 			return {
@@ -68,7 +67,11 @@
             this.getProductList()
             this.getShopCartInfo()
         },
-		computed: {
+        computed: {
+            ...mapState({
+                vuex_store_id: 'vuex_store_id',
+                vuex_table_id: 'vuex_table_id'
+            }),
         },
         components: {
             // ListComponent,
@@ -112,7 +115,7 @@
                         return;
                     }
                     const postData = {
-                        store_id: STORE_ID,
+                        store_id: this.vuex_store_id,
                         product_name: value
                     }
                     this.$u.api.fuzzySearchGoodsList(postData).then(res => {
@@ -125,8 +128,8 @@
             // 获取分类列表
             getProductList() {
                 const postData = {
-                    store_id: STORE_ID,
-                    table_id: TABLE_ID
+                    store_id: this.vuex_store_id,
+                    table_id: this.vuex_table_id
                 }
                 this.$u.api.productList(postData).then(res => {
                     if (res) {
@@ -142,8 +145,8 @@
             // 获取购物车信息
             getShopCartInfo() {
                 const postData = {
-                    store_id: STORE_ID,
-                    table_id: TABLE_ID
+                    store_id: this.vuex_store_id,
+                    table_id: this.vuex_table_id
                 }
                 this.$u.api.shopCartList(postData).then(res => {
                     if (res) {

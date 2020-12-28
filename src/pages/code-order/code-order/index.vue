@@ -31,7 +31,7 @@
             <scroll-view scroll-y class="right-box">
                 <view v-for="(item,index) in tabbarList" :key="index" @click="jumpDetail(item)">
                     <view v-if="item.parent_key == currentKey" class="page-view">
-                        <product-item :productData="item" :storeId="storeId" :tableId="tableId"></product-item>
+                        <product-item :productData="item" :storeId="vuex_store_id" :tableId="vuex_table_id"></product-item>
                     </view>
                 </view>
             </scroll-view>
@@ -41,7 +41,7 @@
                 <product-item :productData="item"></product-item>
             </view>
         </view>
-        <selected-product :shopCartInfo="vuex_sandCodeShopCartList" :storeId="storeId" :tableId="tableId"></selected-product>
+        <selected-product :shopCartInfo="vuex_sandCodeShopCartList" :storeId="vuex_store_id" :tableId="vuex_table_id"></selected-product>
 	</view>
 </template>
 
@@ -50,7 +50,6 @@
     import SelectedProduct from '@/components/selected-product/index';
     import socketTask from '@/common/ws.js'
     import { mapState } from 'vuex';
-    import { STORE_ID, TABLE_ID } from '@/common/config'
 	export default {
 		data() {
 			return {
@@ -63,22 +62,20 @@
                 searchData: '', // 搜索框的值
                 searchList: [], // 模糊搜索出来的列表
                 wsTask: null, // ws实例
-                tableId: '', // 桌号id
-                storeId: '', // 门店id
                 init: true,
 			}
         },
         onLoad(options) {
             console.log('options', options)
-            this.tableId = options.tableId ? Number(options.tableId) : TABLE_ID;
-            this.storeId = options.storeId ? Number(options.storeId) : STORE_ID;
+            // this.tableId = options.tableId ? Number(options.tableId);
+            // this.storeId = options.storeId ? Number(options.storeId);
             this.getProductList()
             this.getShopCartInfo()
             this.checkIsExistOrder()
         },
         onShow() {
             if (this.init) {
-                this.wsTask = socketTask(this.tableId, this.vuex_userInfo.member_id); // table_id和user_id
+                this.wsTask = socketTask(this.vuex_table_id, this.vuex_userInfo.member_id); // table_id和user_id
                 this.wsTask.onMessage(this.setShppCartInfo)
                 this.init = false
             }
@@ -91,6 +88,8 @@
             ...mapState({
                 vuex_userInfo: 'vuex_userInfo',
                 vuex_sandCodeShopCartList: 'vuex_sandCodeShopCartList', // 购物车数据
+                vuex_store_id: 'vuex_store_id',
+                vuex_table_id: 'vuex_table_id'
             }),
         },
         components: {
@@ -147,8 +146,8 @@
                         return;
                     }
                     const postData = {
-                        store_id: this.storeId,
-                        table_id: this.tableId,
+                        store_id: this.vuex_store_id,
+                        table_id: this.vuex_table_id,
                         product_name: value
                     }
                     this.$u.api.fuzzySearchGoodsList(postData).then(res => {
@@ -161,8 +160,8 @@
             // 获取分类列表
             getProductList() {
                 const postData = {
-                    store_id: this.storeId,
-                    table_id: this.tableId
+                    store_id: this.vuex_store_id,
+                    table_id: this.vuex_table_id
                 }
                 this.$u.api.productList(postData).then(res => {
                     if (res) {
@@ -178,8 +177,8 @@
             // 获取购物车信息
             getShopCartInfo() {
                 const postData = {
-                    store_id: this.storeId,
-                    table_id: this.tableId
+                    store_id: this.vuex_store_id,
+                    table_id: this.vuex_table_id
                 }
                 this.$u.api.shopCartList(postData).then(res => {
                     if (res) {
@@ -190,16 +189,16 @@
             // 跳转商品详情
             jumpDetail(item) {
                 this.$u.route('/pages/product-detail/index', {
-                    tableId: this.tableId,
-                    storeId: this.storeId,
+                    tableId: this.vuex_table_id,
+                    storeId: this.vuex_store_id,
                     productId: item.product_id || ''
                 })
             },
             // 检查是否有存在中的订单
             checkIsExistOrder () {
                 const postData = {
-                    store_id: this.storeId,
-                    table_id: this.tableId
+                    store_id: this.vuex_store_id,
+                    table_id: this.vuex_table_id
                 }
                 this.$u.api.isExistOrder(postData).then(res => {
                     if (res.isExist) {

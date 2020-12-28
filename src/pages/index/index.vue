@@ -67,9 +67,29 @@
                 this.$u.route(url, params)
             },
             // 跳转列表
-            jumpCodeOrder(url, params) {
+            jumpCodeOrder(url) {
                 const { result } = saceCode()
-                this.jump(url, params)
+                if (result) {
+                    try {
+                        const queryArr = result.split('?')[1].split('&');
+                        const stroeId = queryArr[0].split('=')[1]
+                        const tableId = queryArr[1].split('=')[1]
+                        const params = {
+                            stroeId,
+                            tableId
+                        }
+                        if (stroeId) {
+                            this.$store.commit('setStoreId', stroeId)
+                        }
+                        if (tableId) {
+                            this.$store.commit('setTableId', tableId)
+                        }
+                        this.jump(url, params)
+                    } catch (error) {
+                        
+                    }
+                }
+
             },
             checkCellphone(url, params) {
                 // if (!checkIsAuthCellphone(this)) {
@@ -90,17 +110,17 @@
                         this.jumpCodeOrder('/pages/code-order/code-order/index')
                         break
                     // 预约点餐
-                    case 'jumpReserve':
-                        this.checkCellphone('/pages/mark-an-appoint/home-page/index')
-                        break
+                    // case 'jumpReserve':
+                    //     this.checkCellphone('/pages/mark-an-appoint/home-page/index')
+                    //     break
                     // 外卖
-                    case 'jumpTakeout':
-                        this.checkCellphone('/pages/take-out/change-door/index')
-                        break
+                    // case 'jumpTakeout':
+                    //     this.checkCellphone('/pages/take-out/change-door/index')
+                    //     break
                     // 家宴
-                    case 'jumpTheDoor':
-                        this.checkCellphone('/pages/the-door/index/index')
-                        break
+                    // case 'jumpTheDoor':
+                    //     this.checkCellphone('/pages/the-door/index/index')
+                    //     break
                 }
             },
         }

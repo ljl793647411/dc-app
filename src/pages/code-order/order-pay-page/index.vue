@@ -10,7 +10,6 @@
 
 <script>
 import OrderDetail from '@/components/order-detail/index'
-import { STORE_ID, TABLE_ID } from '@/common/config'
 export default {
     data() {
         return {
@@ -24,13 +23,19 @@ export default {
     onLoad(options) {
         this.orderId = options.orderId;
         this.getOrderDetail();
-    },  
+    }, 
+    computed: {
+        ...mapState({
+            vuex_store_id: 'vuex_store_id',
+            vuex_table_id: 'vuex_table_id'
+        }),
+    },
     methods: {
         // 跳转选择商品页
         jumpProductList() {
             this.$u.route('/pages/code-order/code-order/index', {
-                tableId: this.orderDetailData.table_id || TABLE_ID,
-                storeId: this.orderDetailData.store_id || STORE_ID,
+                tableId: this.orderDetailData.table_id || this.vuex_table_id,
+                storeId: this.orderDetailData.store_id || this.vuex_store_id,
             })
         },
         // 完成订单跳转订单详情

@@ -7,7 +7,9 @@ const store = new Vuex.Store({
         vuex_sessionKey: '', // sessionKey
         vuex_userInfo: {}, // 用户信息
         vuex_cellphone: {}, // 手机号码
-        vuex_sandCodeShopCartList: {}, // 扫码点餐购物车列表
+		vuex_sandCodeShopCartList: {}, // 扫码点餐购物车列表
+		vuex_store_id: 8, 	// 门店id
+		vuex_table_id: 5, // 桌子id
 
 	},
 	mutations: {
@@ -26,6 +28,14 @@ const store = new Vuex.Store({
         // 设置手机号
         setCellphone(state, payload) {
 			state.vuex_cellphone = payload;
+        },
+        // 设置手机号
+        setTableId(state, payload) {
+			state.vuex_table_id = payload;
+        },
+        // 设置手机号
+        setStoreId(state, payload) {
+			state.vuex_store_id = payload;
         }
 	}
 })
