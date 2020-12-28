@@ -10,6 +10,7 @@
 
 <script>
 import OrderDetail from '@/components/order-detail/index'
+import { mapState } from 'vuex';
 export default {
     data() {
         return {

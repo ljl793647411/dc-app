@@ -49,6 +49,7 @@
     // import ListComponent from './list'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
+    import { mapState } from 'vuex';
 	export default {
 		data() {
 			return {
