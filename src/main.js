@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 import store from '@/store';
-import lodash from 'lodash';
 import moment from 'moment';
 
 Vue.config.productionTip = false;
-Vue.prototype.lodash = lodash;
 Vue.prototype.moment = moment;
 
 App.mpType = 'app';

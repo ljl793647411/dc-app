@@ -8,11 +8,11 @@
                 <text class="name">醉徽湘</text>
                 <view class="info">
                     <text>桌号：</text>
-                    <text>{{orderDetail.desk_name || ''}}</text>
+                    <text>{{orderDetail.table_value || ''}}</text>
                 </view>
                 <view class="info">
                     <text>用餐人数：</text>
-                    <text>{{`${orderDetail.eat_numb || ''}人`}}</text>
+                    <text>{{`${orderDetail.eat_num || ''}人`}}</text>
                 </view>
                 <view class="info">
                     <text>下单时间：</text>

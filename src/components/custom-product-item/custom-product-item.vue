@@ -82,7 +82,14 @@
                         store_id: this.storeId,
                         table_id: this.tableId,
                         product_id: this.productData.product_id,
-                        selected_num: this.selectedNum + 1,
+                    }
+                    switch(type) {
+                        case 'add':
+                            postData.selected_num = this.selectedNum + 1;
+                            break;
+                        case 'sub':
+                            postData.selected_num = this.selectedNum - 1;
+                            break;
                     }
                     this.$u.api.updateShopCart(postData).then(() => {
                         switch(type) {

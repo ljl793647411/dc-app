@@ -13,16 +13,16 @@
                     </view>
                     <view class="right-content">
                         <view class="left-info">
-                            <text class="name">{{item.name || ''}}</text>
-                            <text class="desc">
+                            <view class="name">{{item.name || ''}}</view>
+                            <view class="desc">
                                 {{`本月销量${item.sales || 0}份`}}
-                            </text>
+                            </view>
                         </view>
                         <view class="price-info">
-                            <text class="price">{{`￥${item.product_price || 0}`}}</text>
-                            <text class="num">
+                            <view class="price">{{`￥${item.product_price || 0}`}}</view>
+                            <view class="num">
                                 {{`x${item.product_num || 0}`}}
-                            </text>
+                            </view>
                         </view>
                     </view>
                 </view>
@@ -57,7 +57,7 @@ export default {
             if (this.showListNum > 3) {
                 this.showListNum = 3
             } else {
-                this.showListNum = this.dataList.length
+                this.showListNum = this.orderSelectList.length
             }
         }
     }
@@ -88,6 +88,7 @@ export default {
                     background: #ccc;
                 }
                 .right-content {
+                    width: 100%;
                     padding: 13px 16px;
                     display: flex;
                     justify-content: space-between;

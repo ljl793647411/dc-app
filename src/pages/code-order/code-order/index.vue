@@ -66,12 +66,25 @@
 			}
         },
         onLoad(options) {
-            console.log('options', options)
-            // this.tableId = options.tableId ? Number(options.tableId);
-            // this.storeId = options.storeId ? Number(options.storeId);
+			let query = options.q
+			var queryString = decodeURIComponent(query)
+			let params = {}
+			if (queryString) {
+			  let queryArray = queryString.split('?')
+			  if (queryArray.length > 1) {
+				let query = queryArray[1]
+				let array = query.split('&')
+				let storeArray = array[0].split('=')
+                let tableArray = array[1].split('=')
+                this.$store.commit('setStoreId', storeArray[1])
+                this.$store.commit('setTableId', tableArray[1])
+			  }
+			}
             this.getProductList()
             this.getShopCartInfo()
-            this.checkIsExistOrder()
+            if (options.source !== 'orderDetail') {
+                this.checkIsExistOrder()
+            }
         },
         onShow() {
             if (this.init) {
@@ -159,6 +172,7 @@
             },
             // 获取分类列表
             getProductList() {
+                console.log('product-vuex', this.vuex_store_id, this.vuex_table_id)
                 const postData = {
                     store_id: this.vuex_store_id,
                     table_id: this.vuex_table_id
@@ -205,12 +219,10 @@
                         uni.showModal({
                             title: '提示',
                             content: '有一笔正在进行中的订单，是否前往查看',
-                            success: (res) => {
-                                if (res.confirm) {
-                                    this.$u.route('/pages/code-order/order-detail/index', {
-                                        orderId: res.order_id || 1
-                                    })
-                                }
+                            success: () => {
+                                this.$u.route('/pages/code-order/order-pay-page/index', {
+                                    orderId: res.order_id
+                                })
                             }
                         })
                     }

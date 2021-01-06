@@ -15,14 +15,14 @@
                     </view>
                 </view>
             </view>
-            <home-title title="店铺精选"></home-title>
+            <!-- <home-title title="店铺精选"></home-title>
             <view class="home-product-list-box">
                 <view v-for="(item, index) in productList" :key="index" :class="{'home-product-item': index === 0}">
                     <product-item-first :productDetail="item" v-if="index === 0" @saceCode="jumpCodeOrder"></product-item-first>
                     <product-item :productDetail="item" v-else @saceCode="jumpCodeOrder"></product-item>
                 </view>
-            </view>
-            <home-title title="店铺动态"></home-title>
+            </view> -->
+            <!-- <home-title title="店铺动态"></home-title> -->
         </view>
     </viwe>
 </template>
@@ -67,35 +67,36 @@
                 this.$u.route(url, params)
             },
             // 跳转列表
-            jumpCodeOrder(url) {
-                const { result } = saceCode()
-                if (result) {
-                    try {
-                        const queryArr = result.split('?')[1].split('&');
-                        const stroeId = queryArr[0].split('=')[1]
-                        const tableId = queryArr[1].split('=')[1]
-                        const params = {
-                            stroeId,
-                            tableId
-                        }
-                        if (stroeId) {
-                            this.$store.commit('setStoreId', stroeId)
-                        }
-                        if (tableId) {
-                            this.$store.commit('setTableId', tableId)
-                        }
-                        this.jump(url, params)
-                    } catch (error) {
-                        
+            async jumpCodeOrder(url) {
+                try {
+                    const { result } = await saceCode()
+                    const queryArr = result.split('?')[1].split('&');
+                    const stroeId = queryArr[0].split('=')[1]
+                    const tableId = queryArr[1].split('=')[1]
+                    const params = {
+                        stroeId,
+                        tableId
                     }
+                    if (stroeId) {
+                        this.$store.commit('setStoreId', stroeId)
+                    }
+                    if (tableId) {
+                        this.$store.commit('setTableId', tableId)
+                    }
+                    this.jump(url, params)
+                } catch (error) {
+                    
                 }
-
             },
             checkCellphone(url, params) {
+                uni.showToast({
+                    icon: 'none',
+                    title: '功能正在开发中，敬请期待',
+                })
                 // if (!checkIsAuthCellphone(this)) {
                 //     return
                 // }
-                this.jump(url, params)
+                // this.jump(url, params)
             },
             // 方法转换
             funcTrans(name) {
@@ -110,17 +111,17 @@
                         this.jumpCodeOrder('/pages/code-order/code-order/index')
                         break
                     // 预约点餐
-                    // case 'jumpReserve':
-                    //     this.checkCellphone('/pages/mark-an-appoint/home-page/index')
-                    //     break
+                    case 'jumpReserve':
+                        this.checkCellphone('/pages/mark-an-appoint/home-page/index')
+                        break
                     // 外卖
-                    // case 'jumpTakeout':
-                    //     this.checkCellphone('/pages/take-out/change-door/index')
-                    //     break
+                    case 'jumpTakeout':
+                        this.checkCellphone('/pages/take-out/change-door/index')
+                        break
                     // 家宴
-                    // case 'jumpTheDoor':
-                    //     this.checkCellphone('/pages/the-door/index/index')
-                    //     break
+                    case 'jumpTheDoor':
+                        this.checkCellphone('/pages/the-door/index/index')
+                        break
                 }
             },
         }

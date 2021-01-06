@@ -5,9 +5,9 @@ const socketTask = (tableId, userId) => {
     let timer = 0;
 
     let ws = uni.connectSocket({
-        url: `ws://xcx.xiaozuiweng.com:8080/websocket.ws/${tableId}/${userId}`,
+        url: `wss://xcx.xiaozuiweng.com/websocket.ws/${tableId}/${userId}`,
         // url: `ws://47.111.184.105/websocket.ws/${tableId}/${userId}`,
-        // url: `ws://bah95r.natappfree.cc/websocket.ws/${tableId}/${6}`,
+        // url: `ws://baxz45.natappfree.cc/websocket.ws/${tableId}/${userId}`,
         success: () => {}
     })
     ws.onOpen(function () {

@@ -1,5 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
-import _isEmpty from 'lodash/isEmpty';
 
 // 只允许通过相机扫码
 export const saceCode = () => {
@@ -8,11 +6,10 @@ export const saceCode = () => {
             onlyFromCamera: true,
             scanType: ['qrCode'],
             success: function (res) {
-                console.log('条码类型scanType：' + res.scanType);
-                console.log('条码内容result：' + res.result);
-                console.log('条码内容charSet：' + res.charSet);
-                console.log('条码内容path：' + res.path);
                 resolve(res)
+            },
+            fail: function (err) {
+                rej(err)
             }
         });
     })
@@ -43,7 +40,7 @@ export const loginFunc = (t) => {
                 code: wxRes.code || ''
             }
             const res = await t.$u.api.login(postData);
-            if (!_isEmpty(res.member)) {
+            if (res.member) {
                 t.$store.commit('setUserInfo', res.member)
             }
             t.$store.commit('setSessionKey', res.session_key)
@@ -113,7 +110,7 @@ export const getCellphoneHandle = (t, e) => {
  * @description 校验是否授权
  */
 export const checkIsAuth = (t) => {
-    if (isEmpty(t.$store.state.vuex_userInfo)) {
+    if (!t.$store.state.vuex_userInfo) {
         t.$u.route('/pages/authorization/index', {
             getType: 'default'
         })
@@ -126,7 +123,7 @@ export const checkIsAuth = (t) => {
  * @description 校验是否授权手机号
  */
 export const checkIsAuthCellphone = (t) => {
-    if (isEmpty(t.$store.state.vuex_cellphone)) {
+    if (!t.$store.state.vuex_cellphone) {
         t.$u.route('/pages/authorization/index', {
             getType: 'cellphone'
         })

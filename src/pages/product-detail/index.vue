@@ -49,32 +49,68 @@
                 selectedNum: 0,
                 tableId: '', // 桌号id
                 storeId: '', // 门店id
+                orderDeatilData: {},
+                wsTask: null, // ws实例
+                init: true,
+                isNeedws: 0
             }
         },
         components: {
             SelectedProduct,
         },
         onLoad(options) {
-            const { productId } = options
+            const { productId, isNeedws } = options
             this.tableId = options.tableId ? Number(options.tableId) : 1;
             this.storeId = options.storeId ? Number(options.storeId) : 1;
+            // 是否需要建立ws，1需要，0不需要，默认0
+            if (isNeedws) {
+                this.isNeedws = Number(isNeedws)
+            }
             this.getProductDetail({productId})
+        },
+        onShow() {
+            if (this.isNeedws === 1 && this.init) {
+                this.wsTask = socketTask(this.vuex_table_id, this.vuex_userInfo.member_id); // table_id和user_id
+                this.wsTask.onMessage(this.setShppCartInfo)
+                this.init = false
+            }
+        },
+        onHide() {
+            if (this.isNeedws === 1) {
+                this.wsTask.close()
+                this.init = true
+            }
         },
         computed: {
             ...mapState({
+                vuex_userInfo: 'vuex_userInfo',
                 vuex_sandCodeShopCartList: 'vuex_sandCodeShopCartList', // 购物车数据
+                vuex_store_id: 'vuex_store_id',
+                vuex_table_id: 'vuex_table_id'
             }),
         },
         methods: {
+            // 设置购物车数据
+            setShppCartInfo(res) {
+                try {
+                    const data = JSON.parse(res.data)
+                    this.$store.commit('setSandCodeShopCartList', JSON.parse(data.shopCarJson))
+                    this.tabbarList = data.product_list;
+                } catch (error) {
+                    uni.showToast({
+                        title: '操作失败，请重试',
+                        icon: 'none'
+                    })
+                }
+            },
             // 获取商品详情
             getProductDetail({productId}) {
                 const postData = {
                     product_id: Number(productId),
-                    tableId: this.tableId,
-                    storeId: this.storeId,
+                    table_id: this.tableId,
+                    store_id: this.storeId,
                 }
                 this.$u.api.getProductDetail(postData).then(res => {
-                    console.log('res', res)
                     this.orderDeatilData = res || {}
                     this.selectedNum = res.selected_num || 0
                 })
@@ -90,10 +126,17 @@
             requestShopCart() {
                 this.$u.debounce(() => {
                     const postData = {
-                        tableId: this.tableId,
-                        storeId: this.storeId,
-                        product_id: this.productData.product_id,
-                        selected_num: this.selectedNum + 1,
+                        table_id: this.tableId,
+                        store_id: this.storeId,
+                        product_id: this.orderDeatilData.product_id,
+                    }
+                    switch(type) {
+                        case 'add':
+                            postData.selected_num = this.selectedNum + 1;
+                            break;
+                        case 'sub':
+                            postData.selected_num = this.selectedNum - 1;
+                            break;
                     }
                     this.$u.api.updateShopCart(postData).then(() => {
                         switch(type) {

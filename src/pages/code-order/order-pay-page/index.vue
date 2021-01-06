@@ -35,8 +35,7 @@ export default {
         // 跳转选择商品页
         jumpProductList() {
             this.$u.route('/pages/code-order/code-order/index', {
-                tableId: this.orderDetailData.table_id || this.vuex_table_id,
-                storeId: this.orderDetailData.store_id || this.vuex_store_id,
+                source: 'orderDetail'
             })
         },
         // 完成订单跳转订单详情

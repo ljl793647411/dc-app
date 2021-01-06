@@ -5,14 +5,14 @@
                 <view class="profile-photo">
                     <image :src="vuex_userInfo.head_img" class="img"></image>
                 </view>
-                <view class="my-info" v-if="!lodash.isEmpty(vuex_userInfo)">
-                    <text class="name">{{vuex_userInfo.member_name}}</text>
+                <view class="my-info" v-if="vuex_userInfo.member_name">
+                    <text class="name">{{vuex_userInfo.member_name || ''}}</text>
                     <view class="phone-box">
-                        <text class="phone">{{vuex_cellphone}}</text>
+                        <text class="phone">{{vuex_cellphone || ''}}</text>
                         <view class="update-phone-btn">修改</view>
                     </view>
                 </view>
-                <button v-else open-type="getUserInfo" @getuserinfo="getuserinfoHandle">点击登录</button>
+                <button class="login-btn" v-else open-type="getUserInfo" @getuserinfo="getuserinfoHandle">点击登录</button>
                 <button class="my-info-card">
                     <view class="title-box">
                         <view class="icon">
@@ -140,6 +140,10 @@ export default {
                         margin-left: 2px;
                     }
                 }
+            }
+
+            .login-btn {
+
             }
 
             .my-info-card {
