@@ -205,7 +205,8 @@
                 this.$u.route('/pages/product-detail/index', {
                     tableId: this.vuex_table_id,
                     storeId: this.vuex_store_id,
-                    productId: item.product_id || ''
+                    productId: item.product_id || '',
+                    isNeedws: 1,
                 })
             },
             // 检查是否有存在中的订单
