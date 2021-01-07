@@ -21,20 +21,24 @@ const socketTask = (tableId, userId) => {
         console.log('WebSocket连接打开失败，请检查！', res);
     });
 
+    function send () {
+        ws.send({
+            data: 'ping',
+            success: res => {
+                console.log('连接中....');
+                start();
+            },
+            fail: err => {
+                console.log('连接失败重新连接....');
+                ws = socketTask(tableId, userId);
+            }
+        })
+    }
+
     function start () {
         clearTimeout(timer)
         timer = setTimeout(() => {
-            ws.send({
-                data: 'ping',
-                success: res => {
-                    console.log('连接中....');
-                    start();
-                },
-                fail: err => {
-                    console.log('连接失败重新连接....');
-                    ws = socketTask();
-                }
-            })
+            send()
         }, 10000);
     }
 

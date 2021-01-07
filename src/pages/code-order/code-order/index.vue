@@ -172,7 +172,6 @@
             },
             // 获取分类列表
             getProductList() {
-                console.log('product-vuex', this.vuex_store_id, this.vuex_table_id)
                 const postData = {
                     store_id: this.vuex_store_id,
                     table_id: this.vuex_table_id
