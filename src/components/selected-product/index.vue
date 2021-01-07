@@ -129,6 +129,20 @@
             },
             // 跳转订单详情
             jumpOrderPayment() {
+                if (!this.shopCartInfo.eat_numb && Number(this.shopCartInfo.eat_numb) <= 0) {
+                    uni.showToast({
+                        title: '请选择就餐人数',
+                        icon: 'none',
+                    })
+                    return
+                }
+                if (!this.shopCartInfo.selected_num_total && Number(this.shopCartInfo.selected_num_total) <= 0) {
+                    uni.showToast({
+                        title: '请至少选择一件菜品',
+                        icon: 'none',
+                    })
+                    return
+                }
                 const postData = {
                     store_id: this.storeId,
                     table_id: this.tableId

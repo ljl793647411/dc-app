@@ -7,7 +7,7 @@
                 </view>
                 <view class="my-info" v-if="vuex_userInfo.member_name">
                     <text class="name">{{vuex_userInfo.member_name || ''}}</text>
-                    <view class="phone-box">
+                    <view class="phone-box" v-if="vuex_cellphone">
                         <text class="phone">{{vuex_cellphone || ''}}</text>
                         <view class="update-phone-btn">修改</view>
                     </view>
