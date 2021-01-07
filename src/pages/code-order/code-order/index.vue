@@ -216,14 +216,8 @@
                 }
                 this.$u.api.isExistOrder(postData).then(res => {
                     if (res.isExist) {
-                        uni.showModal({
-                            title: '提示',
-                            content: '有一笔正在进行中的订单，是否前往查看',
-                            success: () => {
-                                this.$u.route('/pages/code-order/order-pay-page/index', {
-                                    orderId: res.order_id
-                                })
-                            }
+                        this.$u.route('/pages/code-order/order-pay-page/index', {
+                            orderId: res.order_id
                         })
                     }
                 })
