@@ -34,6 +34,7 @@
     import HomeTitle from '@/components/home-title/index'
     import ProductItem from './product-item'
     import ProductItemFirst from './product-item-first'
+    import { mapState } from 'vuex';
 
 	export default {
 		data() {
@@ -46,6 +47,9 @@
             this.init()
         },
 		computed: {
+            ...mapState({
+                vuex_store_id: 'vuex_store_id',
+            }),
         },
         components: {
             HomeTitle,
@@ -58,7 +62,7 @@
             // 必须是串行逻辑
             async init() {
                 await loginFunc(this)
-                this.$u.api.hotProduct({store_id: 1}).then(res => {
+                this.$u.api.hotProduct({store_id: this.vuex_store_id}).then(res => {
                     this.productList = res.hotProduct || []
                 })
             },

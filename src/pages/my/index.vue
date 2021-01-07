@@ -12,7 +12,7 @@
                         <view class="update-phone-btn">修改</view>
                     </view>
                 </view>
-                <button class="login-btn" v-else open-type="getUserInfo" @getuserinfo="getuserinfoHandle">点击登录</button>
+                <!-- <button class="login-btn" v-else open-type="getUserInfo" @getuserinfo="getuserinfoHandle">点击登录</button> -->
                 <button class="my-info-card">
                     <view class="title-box">
                         <view class="icon">

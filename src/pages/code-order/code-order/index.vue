@@ -66,25 +66,7 @@
 			}
         },
         onLoad(options) {
-			let query = options.q
-			var queryString = decodeURIComponent(query)
-			let params = {}
-			if (queryString) {
-			  let queryArray = queryString.split('?')
-			  if (queryArray.length > 1) {
-				let query = queryArray[1]
-				let array = query.split('&')
-				let storeArray = array[0].split('=')
-                let tableArray = array[1].split('=')
-                this.$store.commit('setStoreId', storeArray[1])
-                this.$store.commit('setTableId', tableArray[1])
-			  }
-			}
-            this.getProductList()
-            this.getShopCartInfo()
-            if (options.source !== 'orderDetail') {
-                this.checkIsExistOrder()
-            }
+            this.initFunc(options)
         },
         onShow() {
             if (this.init) {
@@ -99,6 +81,7 @@
         },
 		computed: {
             ...mapState({
+                vuex_sessionKey: 'vuex_sessionKey',
                 vuex_userInfo: 'vuex_userInfo',
                 vuex_sandCodeShopCartList: 'vuex_sandCodeShopCartList', // 购物车数据
                 vuex_store_id: 'vuex_store_id',
@@ -110,6 +93,35 @@
             SelectedProduct
         },
 		methods: {
+            // 入口放在这里是因为还可通过微信扫一扫
+            // 这个方法把获取sessionKey的方法也放到业务逻辑里
+            // 是因为需要在login拿到sessionKey之后才能请求其他逻辑，
+            // 必须是串行逻辑
+            async initFunc(options) {
+                // 要是没有sessionKey,先请求login
+                if (!this.vuex_sessionKey) {
+                    await loginFunc(this)
+                }
+                let query = options.q
+                var queryString = decodeURIComponent(query)
+                let params = {}
+                if (queryString) {
+                let queryArray = queryString.split('?')
+                if (queryArray.length > 1) {
+                    let query = queryArray[1]
+                    let array = query.split('&')
+                    let storeArray = array[0].split('=')
+                    let tableArray = array[1].split('=')
+                    this.$store.commit('setStoreId', storeArray[1])
+                    this.$store.commit('setTableId', tableArray[1])
+                }
+                }
+                this.getProductList()
+                this.getShopCartInfo()
+                if (options.source !== 'orderDetail') {
+                    this.checkIsExistOrder()
+                }
+            },
             // 设置购物车数据
             setShppCartInfo(res) {
                 try {
