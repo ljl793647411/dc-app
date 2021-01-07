@@ -5,9 +5,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
         vuex_sessionKey: '', // sessionKey
-        vuex_userInfo: {}, // 用户信息
-        vuex_cellphone: {}, // 手机号码
-		vuex_sandCodeShopCartList: {}, // 扫码点餐购物车列表
+        vuex_userInfo: null, // 用户信息
+        vuex_cellphone: null, // 手机号码
+		vuex_sandCodeShopCartList: null, // 扫码点餐购物车列表
 		vuex_store_id: 8, 	// 门店id
 		vuex_table_id: 5, // 桌子id
 
