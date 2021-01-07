@@ -70,15 +70,17 @@
             this.initFunc(options)
         },
         onShow() {
-            if (this.init) {
+            if (this.init && this.vuex_userInfo.member_id) {
                 this.wsTask = socketTask(this.vuex_table_id, this.vuex_userInfo.member_id); // table_id和user_id
                 this.wsTask.onMessage(this.setShppCartInfo)
                 this.init = false
             }
         },
         onHide() {
-            this.wsTask.close()
-            this.init = true
+            if (this.wsTask) {
+                this.wsTask.close()
+                this.init = true
+            }
         },
 		computed: {
             ...mapState({
