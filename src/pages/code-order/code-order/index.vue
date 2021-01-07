@@ -103,23 +103,23 @@
                 if (!this.vuex_sessionKey) {
                     await loginFunc(this)
                 }
-                // 如果没有授权，先跳授权页
-                if (!checkIsAuth(this)) {
-                    return
-                }
                 let query = options.q
                 var queryString = decodeURIComponent(query)
                 let params = {}
                 if (queryString) {
-                let queryArray = queryString.split('?')
-                if (queryArray.length > 1) {
-                    let query = queryArray[1]
-                    let array = query.split('&')
-                    let storeArray = array[0].split('=')
-                    let tableArray = array[1].split('=')
-                    this.$store.commit('setStoreId', storeArray[1])
-                    this.$store.commit('setTableId', tableArray[1])
+                    let queryArray = queryString.split('?')
+                    if (queryArray.length > 1) {
+                        let query = queryArray[1]
+                        let array = query.split('&')
+                        let storeArray = array[0].split('=')
+                        let tableArray = array[1].split('=')
+                        this.$store.commit('setStoreId', storeArray[1])
+                        this.$store.commit('setTableId', tableArray[1])
+                    }
                 }
+                // 如果没有授权，先跳授权页
+                if (!checkIsAuth(this)) {
+                    return
                 }
                 this.getProductList()
                 this.getShopCartInfo()

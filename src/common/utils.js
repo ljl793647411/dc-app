@@ -73,7 +73,11 @@ export const getuserinfoConfig = (t, e) => {
             uni.showToast({
                 title: '授权成功',
                 success: () => {
-                    t.$u.route('/pages/index/index')
+                    setTimeout(() => {
+                        t.$u.route({
+                            type: 'back'
+                        })
+                    }, 1500);
                 }
             })
         })
@@ -110,7 +114,7 @@ export const getCellphoneHandle = (t, e) => {
  * @description 校验是否授权
  */
 export const checkIsAuth = (t) => {
-    if (!t.$store.state.vuex_userInfo) {
+    if (t.$store.state.vuex_userInfo) {
         t.$u.route('/pages/authorization/index', {
             getType: 'default'
         })
