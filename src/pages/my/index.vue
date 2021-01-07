@@ -142,10 +142,6 @@ export default {
                 }
             }
 
-            .login-btn {
-
-            }
-
             .my-info-card {
                 width: calc(100% - 30px);
                 height: 123px;

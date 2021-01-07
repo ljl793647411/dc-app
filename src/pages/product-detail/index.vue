@@ -22,8 +22,8 @@
                     </view>
                 </view>
                 <view class="btn-box">
-                    <view class="btn" v-if="selected_num > 0" @click.stop="subtract">-</view>
-                    <text class="text" v-if="selected_num > 0">{{selected_num}}</text>
+                    <view class="btn" v-if="selectedNum > 0" @click.stop="subtract">-</view>
+                    <text class="text" v-if="selectedNum > 0">{{selectedNum}}</text>
                     <view class="btn" @click.stop="add">+</view>
                 </view>
             </view>
@@ -41,6 +41,7 @@
 </template>
 <script>
     import SelectedProduct from '@/components/selected-product/index';
+    import socketTask from '@/common/ws.js'
     import { mapState } from 'vuex';
 	export default {
         data() {
@@ -123,7 +124,7 @@
             add() {
                 this.requestShopCart('add')
             },
-            requestShopCart() {
+            requestShopCart(type) {
                 this.$u.debounce(() => {
                     const postData = {
                         table_id: this.tableId,
@@ -147,6 +148,10 @@
                                 this.selectedNum -= 1;
                                 break;
                         }
+                        // 重新请求详情
+                        this.getProductDetail({
+                            productId: this.orderDeatilData.product_id
+                        })
                     })
                 }, 500)
             }

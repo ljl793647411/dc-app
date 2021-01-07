@@ -61,8 +61,7 @@ export default {
         width: 100%;
 
         .operation-btn-box {
-            margin: 0 auto;
-            margin-top: 33px;
+            margin: 33px auto;
             width: calc(100% - 54px);
             display: flex;
             justify-content: space-between;

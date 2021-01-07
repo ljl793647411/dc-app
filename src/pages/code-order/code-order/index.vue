@@ -38,7 +38,7 @@
 		</view>
         <view class="search-list" v-else>
             <view v-for="item in searchList" :key="item" class="search-list-item">
-                <product-item :productData="item"></product-item>
+                <product-item :productData="item" :storeId="vuex_store_id" :tableId="vuex_table_id"></product-item>
             </view>
         </view>
         <selected-product :shopCartInfo="vuex_sandCodeShopCartList" :storeId="vuex_store_id" :tableId="vuex_table_id"></selected-product>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+    import { loginFunc, checkIsAuth } from '@/common/utils'
     import ProductItem from '@/components/custom-product-item/custom-product-item';
     import SelectedProduct from '@/components/selected-product/index';
     import socketTask from '@/common/ws.js'
@@ -101,6 +102,10 @@
                 // 要是没有sessionKey,先请求login
                 if (!this.vuex_sessionKey) {
                     await loginFunc(this)
+                }
+                // 如果没有授权，先跳授权页
+                if (!checkIsAuth(this)) {
+                    return
                 }
                 let query = options.q
                 var queryString = decodeURIComponent(query)

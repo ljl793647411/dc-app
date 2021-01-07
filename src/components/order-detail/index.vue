@@ -26,7 +26,7 @@
         </text>
         <view class="total-price-box">
             <text class="total-text">合计</text>
-            <text class="total-num">{{`￥${orderDetail.total_price || 0}`}}</text>
+            <text class="total-num">{{`￥${orderDetail.new_price || 0}`}}</text>
         </view>
     </view>
 </template>
